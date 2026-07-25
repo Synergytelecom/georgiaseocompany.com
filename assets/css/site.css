@@ -1,0 +1,190 @@
+/* Georgia SEO Company: base stylesheet. Mobile-first, no framework. */
+
+@font-face {
+  font-family: 'DM Sans';
+  src: url('/assets/fonts/dmsans-400.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'DM Sans';
+  src: url('/assets/fonts/dmsans-700.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Inter';
+  src: url('/assets/fonts/inter-400.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Inter';
+  src: url('/assets/fonts/inter-600.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --primary: #0f3d2e;
+  --accent: #e8963c;
+  --ink: #16211c;
+  --bg: #ffffff;
+  --wash: #f4f7f5;
+  --font-head: 'DM Sans', system-ui, -apple-system, Arial, sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, Arial, sans-serif;
+  --gap: 1.25rem;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+img, svg { max-width: 100%; display: block; }
+a { color: var(--primary); }
+p { margin: 0 0 1rem; }
+
+h1, h2, h3 {
+  font-family: var(--font-head);
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.2;
+  margin: 0 0 .75rem;
+}
+h1 { font-size: 1.9rem; }
+h2 { font-size: 1.4rem; }
+h3 { font-size: 1.15rem; }
+
+.wrap, header.hd, main, footer.ft {
+  width: 100%;
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+/* Header: logo / nav / tel. No sticky positioning. */
+header.hd {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--wash);
+}
+header.hd .logo {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--ink);
+  text-decoration: none;
+}
+header.hd nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem 1rem;
+  order: 3;
+  width: 100%;
+}
+header.hd nav a {
+  color: var(--ink);
+  text-decoration: none;
+  font-size: .9rem;
+}
+header.hd nav a:hover { color: var(--primary); }
+header.hd .tel {
+  font-weight: 600;
+  color: var(--primary);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+main { padding-top: 0; }
+
+section {
+  padding: 2rem 1.25rem;
+  max-width: 72rem;
+  margin: 0 auto;
+}
+section + section { border-top: 1px solid var(--wash); }
+
+/* Hero */
+section.hero {
+  background: var(--wash);
+  border-top: none;
+  text-align: left;
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
+}
+section.hero h1 { margin-bottom: .5rem; }
+section.hero .lead {
+  font-size: 1.1rem;
+  color: var(--ink);
+  max-width: 42rem;
+  margin-bottom: 1.5rem;
+}
+.cta {
+  display: inline-block;
+  background: var(--accent);
+  color: var(--ink);
+  font-family: var(--font-head);
+  font-weight: 700;
+  text-decoration: none;
+  padding: .75rem 1.5rem;
+  border-radius: .25rem;
+}
+.cta:hover, .cta:focus { color: var(--ink); filter: brightness(.95); }
+
+/* FAQ */
+.faq details {
+  border-bottom: 1px solid var(--wash);
+  padding: .75rem 0;
+}
+.faq summary {
+  font-family: var(--font-head);
+  font-weight: 700;
+  cursor: pointer;
+  color: var(--ink);
+}
+.faq summary::marker { color: var(--accent); }
+.faq p { margin-top: .5rem; }
+
+/* Footer */
+footer.ft {
+  padding-top: 1.5rem;
+  padding-bottom: 2rem;
+  border-top: 1px solid var(--wash);
+  color: var(--ink);
+}
+footer.ft p { margin: 0 0 .25rem; }
+footer.ft .legal {
+  font-size: .8rem;
+  color: #5a6a61;
+}
+
+/* Tables that may overflow on narrow screens */
+.tblwrap { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; }
+th, td { padding: .5rem .75rem; text-align: left; border-bottom: 1px solid var(--wash); }
+
+@media (min-width: 48rem) {
+  h1 { font-size: 2.6rem; }
+  h2 { font-size: 1.75rem; }
+  h3 { font-size: 1.3rem; }
+  header.hd nav { order: 2; width: auto; }
+  header.hd .tel { order: 3; }
+  section { padding: 3rem 1.25rem; }
+  section.hero { padding-top: 4rem; padding-bottom: 4rem; }
+}
