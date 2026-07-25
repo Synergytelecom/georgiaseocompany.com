@@ -23,16 +23,17 @@
 <script>
 (function () {
   try {
-    var KEY = 'gscRedirectAttempted';
-    if (sessionStorage.getItem(KEY)) return;
     var path = location.pathname;
     var fixed = path.toLowerCase().replace(/[\s.,;:!?'"()\[\]]+$/, '');
     if (!fixed.endsWith('/')) fixed += '/';
     fixed = fixed.replace(/\/{2,}/g, '/');
-    if (fixed !== path) {
-      sessionStorage.setItem(KEY, '1');
-      location.replace(fixed + location.search + location.hash);
-    }
+    if (fixed === path) return; // nothing to fix, this is a genuine 404
+    // Guard is keyed per normalized target, not session-wide: a genuine 404 elsewhere in the
+    // same session must not burn the one retry this specific slash/case fix gets.
+    var KEY = 'gscRedirectAttempted:' + fixed;
+    if (sessionStorage.getItem(KEY)) return; // already tried this exact target once, stop
+    sessionStorage.setItem(KEY, '1');
+    location.replace(fixed + location.search + location.hash);
   } catch (e) {}
 })();
 </script>
