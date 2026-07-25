@@ -177,9 +177,12 @@ footer.ft .links {
 }
 footer.ft .links a {
   color: var(--primary);
-  text-decoration: none;
+  text-decoration: underline;
 }
-footer.ft .links a:hover { text-decoration: underline; }
+footer.ft .links a:hover,
+footer.ft .links a:focus {
+  color: var(--ink);
+}
 footer.ft .legal {
   font-size: .8rem;
   color: #5a6a61;
