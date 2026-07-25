@@ -164,6 +164,17 @@ section.hero .lead {
 .faq summary::marker { color: var(--accent); }
 .faq p { margin-top: .5rem; }
 
+/* Glossary-style definition lists: term needs to visually outrank its definition,
+   which the browser default (indent only, no weight/family change) does not do. */
+dl { margin: 0 0 1rem; }
+dt {
+  font-family: var(--font-head);
+  font-weight: 700;
+  margin-top: .75rem;
+}
+dt:first-of-type { margin-top: 0; }
+dd { margin: .15rem 0 0 0; }
+
 /* Footer */
 footer.ft {
   padding-top: 1.5rem;
