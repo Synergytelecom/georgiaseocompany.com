@@ -173,7 +173,7 @@ dt {
   margin-top: .75rem;
 }
 dt:first-of-type { margin-top: 0; }
-dd { margin: .15rem 0 0 0; }
+dd { margin: .15rem 0 0 0; font-size: .95rem; }
 
 /* Footer */
 footer.ft {
