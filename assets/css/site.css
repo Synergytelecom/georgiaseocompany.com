@@ -199,6 +199,39 @@ footer.ft .legal {
   color: #5a6a61;
 }
 
+/* Definition blocks (W1.5b): a quotable, standalone definition near the top of a service
+   page, modestly set apart from ordinary body copy with a left accent border only. */
+p.def {
+  border-left: 3px solid var(--accent);
+  padding-left: 1rem;
+  margin: 0 0 1.25rem;
+}
+
+/* Diagrams (W1.5b): brand-styled inline SVG figures dropped into section copy. Card sits on
+   a wash background so the white SERP mockup (the one diagram with a white inner surface)
+   reads as a card; svg text carries no font-family of its own, so it inherits DM Sans here
+   rather than each diagram hardcoding a font stack. */
+figure.diagram {
+  margin: 1.75rem 0;
+  padding: 1.25rem;
+  background: var(--wash);
+  border-radius: .5rem;
+}
+figure.diagram svg {
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
+}
+figure.diagram svg text {
+  font-family: var(--font-head);
+}
+figure.diagram figcaption {
+  margin-top: .85rem;
+  font-size: .85rem;
+  color: #5a6a61;
+  text-align: center;
+}
+
 /* Tables that may overflow on narrow screens */
 .tblwrap { overflow-x: auto; }
 table { border-collapse: collapse; width: 100%; }
