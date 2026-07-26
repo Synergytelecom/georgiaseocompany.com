@@ -204,6 +204,75 @@ footer.ft .legal {
 table { border-collapse: collapse; width: 100%; }
 th, td { padding: .5rem .75rem; text-align: left; border-bottom: 1px solid var(--wash); }
 
+/* Skip link: visually hidden until keyboard focus reaches it, then jumps above everything. */
+.skip {
+  position: absolute;
+  left: -999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+.skip:focus {
+  position: fixed;
+  left: 1rem;
+  top: 1rem;
+  z-index: 100;
+  width: auto;
+  height: auto;
+  padding: .6rem 1rem;
+  background: var(--primary);
+  color: #fff;
+  font-family: var(--font-head);
+  font-weight: 700;
+  text-decoration: none;
+  border-radius: .25rem;
+}
+
+/* Breadcrumbs: a modest wayfinding strip above the hero band, mirrors the BreadcrumbList
+   schema exactly. Muted so it never competes with the h1 that follows it. */
+.crumbs { padding-top: .85rem; }
+.crumbs ol {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+  font-size: .85rem;
+}
+.crumbs li { color: #5a6a61; }
+.crumbs li:not(:last-child)::after { content: "/"; margin: 0 .5em; color: #9aa79f; }
+.crumbs a { color: #5a6a61; text-decoration: none; }
+.crumbs a:hover, .crumbs a:focus { color: var(--primary); text-decoration: underline; }
+.crumbs li[aria-current="page"] { color: var(--ink); }
+
+/* Related-pages mesh: compact and modest, visually distinct from an in-copy body link
+   (bold heading-family label + a small muted note under it, laid out in a light grid). */
+.related h2 { margin-bottom: 1rem; }
+.related ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: .9rem;
+}
+.related li {
+  border-left: 3px solid var(--wash);
+  padding-left: .9rem;
+}
+.related a {
+  font-family: var(--font-head);
+  font-weight: 700;
+  text-decoration: none;
+}
+.related a:hover, .related a:focus { text-decoration: underline; }
+.related .note {
+  display: block;
+  font-size: .9rem;
+  color: #5a6a61;
+  margin-top: .15rem;
+}
+
 @media (min-width: 48rem) {
   h1 { font-size: 2.6rem; }
   h2 { font-size: 1.75rem; }
@@ -212,4 +281,5 @@ th, td { padding: .5rem .75rem; text-align: left; border-bottom: 1px solid var(-
   header.hd .tel { order: 3; }
   section { padding: 3rem 1.25rem; }
   section.hero { padding-top: 4rem; padding-bottom: 4rem; }
+  .related ul { grid-template-columns: repeat(2, 1fr); gap: 1rem 1.5rem; }
 }
