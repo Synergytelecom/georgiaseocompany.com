@@ -297,6 +297,68 @@ figure.diagram figcaption {
   text-align: center;
 }
 
+/* The FROM NOWHERE comic (/proof/junk-n-your-trunk/). Panels are 600x420 inline SVGs that
+   scale to whatever column they are given, so the only real layout decisions here are how
+   wide the strip gets and how many panels sit in a row.
+
+   Body copy on this site is capped at --col (42rem). A comic read at 42rem puts two panels
+   per row at ~330px each, which is under the width the caption lettering needs, so from 62rem
+   up the strip breaks out of the reading column to the full 72rem shell and runs two up. The
+   breakout is the margin-left:50% + translateX(-50%) pair: 50% of the content box lands the
+   left edge on the page's centre line, and the transform pulls it back by half its own width,
+   so the strip stays centred on the same axis as the prose at any viewport width. */
+.comic-title { margin: 0 0 1.25rem; }
+.comic-title svg { width: 100%; height: auto; }
+.comic-strip { display: grid; gap: 1.75rem; margin: 1.5rem 0 0; }
+figure.panel { margin: 0; }
+figure.panel svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  /* SVG text carries no font-family of its own, exactly like the diagrams, so the lettering
+     inherits DM Sans at heavy weight rather than each panel hardcoding a stack. */
+}
+figure.panel svg text { font-family: var(--font-head); }
+/* Panels 4 and 9 tilt for energy, per the script's art direction. The paired scale keeps the
+   rotated corners inside the grid cell instead of clipping against the next panel. */
+figure.panel.tilt-a svg { transform: rotate(-1.4deg) scale(.982); }
+figure.panel.tilt-b svg { transform: rotate(1.5deg) scale(.982); }
+figure.panel figcaption {
+  margin-top: .7rem;
+  font-size: .92rem;
+  line-height: 1.5;
+  color: #3c4a43;
+}
+/* The panel number is a marker, not a word in the sentence: it hangs at the same 1.15rem step
+   every other hanging element on the site uses. */
+figure.panel figcaption .pn {
+  display: inline-block;
+  min-width: 1.5rem;
+  font-family: var(--font-head);
+  font-weight: 700;
+  color: var(--accent);
+}
+figure.panel figcaption .stat {
+  display: block;
+  margin: 0 0 .25rem 1.5rem;
+  font-family: var(--font-head);
+  font-weight: 700;
+  color: var(--primary);
+}
+figure.panel figcaption .say { display: block; margin: .25rem 0 0 1.5rem; font-style: italic; }
+/* Panel 5 carries dialogue and no caption, so its quote stays on the number's line. */
+figure.panel figcaption .say.lead { display: inline; margin: 0; }
+.smallprint { font-size: .85rem; color: #5a6a61; }
+
+@media (min-width: 62rem) {
+  .comic-title, .comic-strip {
+    width: min(100vw - 3rem, 69rem);
+    margin-left: 50%;
+    transform: translateX(-50%);
+  }
+  .comic-strip { grid-template-columns: repeat(2, 1fr); gap: 2.25rem 2.25rem; }
+}
+
 /* Tables that may overflow on narrow screens. The wrapper carries the bottom margin: the
    last row's border-bottom otherwise sits flush against the paragraph that follows (measured
    gap was 0px on every table at both widths), so the prose read as part of the table. */
