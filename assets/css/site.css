@@ -74,6 +74,11 @@ h1, h2, h3 {
 h1 { font-size: 1.9rem; }
 h2 { font-size: 1.4rem; }
 h3 { font-size: 1.15rem; }
+/* h3 subheads sit inside flowing section copy, breaking up a long paragraph run, rather than
+   opening their own container the way h1/h2 do. The shared heading rule above carries no top
+   margin, which reads fine when a heading is the first thing in a box; mid-copy it needs one, so
+   a subhead reads as a break from the paragraph above it instead of sitting flush against it. */
+h3 { margin-top: 1.75rem; }
 
 .wrap, header.hd, footer.ft {
   width: 100%;
