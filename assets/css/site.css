@@ -297,33 +297,36 @@ figure.diagram figcaption {
   text-align: center;
 }
 
-/* The FROM NOWHERE comic (/proof/junk-n-your-trunk/). Panels are 600x420 inline SVGs that
-   scale to whatever column they are given, so the only real layout decisions here are how
-   wide the strip gets and how many panels sit in a row.
+/* The FROM NOWHERE comic. Everything below is scoped to `.fn`, the class the three comic act
+   sections on /proof/junk-n-your-trunk/ carry, so this whole block (including its keyframes,
+   which are only ever referenced from inside the scope) reaches exactly one page.
 
-   Body copy on this site is capped at --col (42rem). A comic read at 42rem puts two panels
-   per row at ~330px each, which is under the width the caption lettering needs, so from 62rem
-   up the strip breaks out of the reading column to the full 72rem shell and runs two up. The
-   breakout is the margin-left:50% + translateX(-50%) pair: 50% of the content box lands the
+   Panels are inline SVGs that scale to whatever column they are given, so the layout decisions
+   here are just how wide the strip gets, how many panels sit in a row, and which ones break the
+   grid. Body copy on this site is capped at --col (42rem). A comic read at 42rem puts two
+   panels per row at ~330px each, which is under the width the caption lettering needs, so from
+   62rem up the strip breaks out of the reading column to the full 72rem shell and runs two up.
+   The breakout is the margin-left:50% + translateX(-50%) pair: 50% of the content box lands the
    left edge on the page's centre line, and the transform pulls it back by half its own width,
    so the strip stays centred on the same axis as the prose at any viewport width. */
-.comic-title { margin: 0 0 1.25rem; }
-.comic-title svg { width: 100%; height: auto; }
-.comic-strip { display: grid; gap: 1.75rem; margin: 1.5rem 0 0; }
-figure.panel { margin: 0; }
-figure.panel svg {
+.fn .comic-title { margin: 0 0 1.25rem; }
+.fn .comic-title svg { width: 100%; height: auto; }
+.fn .comic-strip { display: grid; gap: 1.75rem; margin: 1.5rem 0 0; }
+.fn figure.panel { margin: 0; }
+.fn figure.panel svg {
   width: 100%;
   height: auto;
   display: block;
   /* SVG text carries no font-family of its own, exactly like the diagrams, so the lettering
      inherits DM Sans at heavy weight rather than each panel hardcoding a stack. */
 }
-figure.panel svg text { font-family: var(--font-head); }
-/* Panels 4 and 9 tilt for energy, per the script's art direction. The paired scale keeps the
-   rotated corners inside the grid cell instead of clipping against the next panel. */
-figure.panel.tilt-a svg { transform: rotate(-1.4deg) scale(.982); }
-figure.panel.tilt-b svg { transform: rotate(1.5deg) scale(.982); }
-figure.panel figcaption {
+.fn figure.panel svg text { font-family: var(--font-head); }
+/* Dutch tilt on the tension beats. The paired scale keeps the rotated corners inside the grid
+   cell instead of clipping against the next panel. */
+.fn figure.panel.tilt-a svg { transform: rotate(-1.9deg) scale(.975); }
+.fn figure.panel.tilt-b svg { transform: rotate(1.5deg) scale(.978); }
+.fn figure.panel.tilt-c svg { transform: rotate(1deg) scale(.985); }
+.fn figure.panel figcaption {
   margin-top: .7rem;
   font-size: .92rem;
   line-height: 1.5;
@@ -331,32 +334,72 @@ figure.panel figcaption {
 }
 /* The panel number is a marker, not a word in the sentence: it hangs at the same 1.15rem step
    every other hanging element on the site uses. */
-figure.panel figcaption .pn {
+.fn figure.panel figcaption .pn {
   display: inline-block;
   min-width: 1.5rem;
   font-family: var(--font-head);
   font-weight: 700;
   color: var(--accent);
 }
-figure.panel figcaption .stat {
+.fn figure.panel figcaption .stat {
   display: block;
   margin: 0 0 .25rem 1.5rem;
   font-family: var(--font-head);
   font-weight: 700;
   color: var(--primary);
 }
-figure.panel figcaption .say { display: block; margin: .25rem 0 0 1.5rem; font-style: italic; }
+.fn figure.panel figcaption .say { display: block; margin: .25rem 0 0 1.5rem; font-style: italic; }
 /* Panel 5 carries dialogue and no caption, so its quote stays on the number's line. */
-figure.panel figcaption .say.lead { display: inline; margin: 0; }
+.fn figure.panel figcaption .say.lead { display: inline; margin: 0; }
 .smallprint { font-size: .85rem; color: #5a6a61; }
 
 @media (min-width: 62rem) {
-  .comic-title, .comic-strip {
+  .fn .comic-title, .fn .comic-strip {
     width: min(100vw - 3rem, 69rem);
     margin-left: 50%;
     transform: translateX(-50%);
   }
-  .comic-strip { grid-template-columns: repeat(2, 1fr); gap: 2.25rem 2.25rem; }
+  .fn .comic-strip { grid-template-columns: repeat(2, 1fr); gap: 2.25rem 2.25rem; }
+  /* The arrival, time, the splash and the last shot run the full width of the strip. Below
+     62rem the strip is one column already, so the span is only needed here. */
+  .fn figure.panel.wide { grid-column: 1 / -1; }
+}
+
+/* Micro motion, all of it optional. Everything lives inside a no-preference query, so a reader
+   who asks for reduced motion gets the strip fully static and fully drawn: no element starts
+   hidden or offset outside this block, and no keyframe is referenced from outside it.
+
+   No JS anywhere. The scroll reveal is CSS scroll driven animation behind an @supports gate,
+   because without a view() timeline the same declaration would run once on the document
+   timeline and could leave a panel stuck at its opening frame. */
+@media (prefers-reduced-motion: no-preference) {
+  /* the cape still catching up with the landing */
+  .fn .fn-cape {
+    transform-box: fill-box;
+    transform-origin: 8% 92%;
+    animation: fnCape 3.6s ease-in-out infinite alternate;
+  }
+  @keyframes fnCape {
+    from { transform: rotate(-1.8deg) translate(0, 0); }
+    to { transform: rotate(2.4deg) translate(-3px, -5px); }
+  }
+  /* the splash action lines breathing */
+  .fn .fn-shimmer { animation: fnShimmer 7s ease-in-out infinite; }
+  @keyframes fnShimmer {
+    0%, 100% { opacity: .45; }
+    50% { opacity: 1; }
+  }
+  @supports (animation-timeline: view()) {
+    .fn figure.panel {
+      animation: fnRise linear both;
+      animation-timeline: view();
+      animation-range: entry 5% cover 24%;
+    }
+    @keyframes fnRise {
+      from { opacity: 0; transform: translateY(28px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  }
 }
 
 /* Tables that may overflow on narrow screens. The wrapper carries the bottom margin: the
