@@ -38,6 +38,12 @@
   --font-head: 'DM Sans', system-ui, -apple-system, Arial, sans-serif;
   --font-body: 'Inter', system-ui, -apple-system, Arial, sans-serif;
   --gap: 1.25rem;
+  /* Hairline that has to actually be visible against white (--wash does not read as an edge). */
+  --rule: #cfdcd5;
+  /* The reading column. Every piece of article content -- prose, lists, headings, tables,
+     diagrams, FAQ rows, the related mesh -- is laid out on this one measure, so the page has a
+     single text column instead of a narrow paragraph floating in a much wider shell. */
+  --col: 42rem;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -61,17 +67,24 @@ h1, h2, h3 {
   color: var(--ink);
   line-height: 1.2;
   margin: 0 0 .75rem;
+  /* Headings are capped to the reading column, which left several of the long ones with a
+     single word alone on the last line. Balancing evens the lines out instead. */
+  text-wrap: balance;
 }
 h1 { font-size: 1.9rem; }
 h2 { font-size: 1.4rem; }
 h3 { font-size: 1.15rem; }
 
-.wrap, header.hd, main, footer.ft {
+.wrap, header.hd, footer.ft {
   width: 100%;
   max-width: 72rem;
   margin: 0 auto;
   padding: 0 1.25rem;
 }
+/* main carries no gutter of its own: sections and the breadcrumb strip each center their own
+   content on --col, and a gutter here would only push the article off that shared axis (it also
+   used to indent body copy 20px past the logo above it, which read as a misalignment). */
+main { width: 100%; max-width: 72rem; margin: 0 auto; padding: 0; }
 
 /* Header: logo / nav / tel. No sticky positioning. */
 header.hd {
@@ -102,28 +115,40 @@ header.hd nav a {
   color: var(--ink);
   text-decoration: none;
   font-size: .9rem;
+  /* At 390 the seven links wrap onto two rows; without this the rows are ~22px tall and sit
+     close enough that a thumb hits the wrong one. */
+  padding: .35rem 0;
 }
 header.hd nav a:hover { color: var(--primary); }
 .tel {
   font-weight: 600;
   color: var(--primary);
-  text-decoration: none;
 }
-.tel:hover, .tel:focus { text-decoration: underline; }
-header.hd .tel { white-space: nowrap; }
+/* Undecorated only up in the header, where it is a nav item. The same class is used mid
+   sentence on the contact page, and there it has to look like a link the reader can tap. */
+header.hd .tel { text-decoration: none; white-space: nowrap; }
+header.hd .tel:hover, header.hd .tel:focus { text-decoration: underline; }
 
 .contact-form { display: block; }
 
-main { padding-top: 0; }
-
+/* Every section is full-shell wide (so the hero wash and the section rules read as bands that
+   span the page) but lays its content out on --col, centered. Before this, prose was capped at
+   42rem while the hero band, section rules, tables, diagrams, the related grid and the FAQ rows
+   all ran the full 1110px shell: the column read as an orphan pinned to the left with ~420px of
+   dead white beside it, not as a chosen measure. max() keeps the 1.25rem gutter on narrow
+   screens, where the column cap is never reached. */
 section {
-  padding: 2rem 1.25rem;
+  padding: 2rem max(1.25rem, calc((100% - var(--col)) / 2));
   max-width: 72rem;
   margin: 0 auto;
 }
 section + section { border-top: 1px solid var(--wash); }
 
 /* Hero */
+/* The seven pages with no breadcrumb (home, the hubs, about/contact/results) would otherwise
+   butt the wash band straight against the header's bottom rule, so the band reads as part of
+   the header. This is the white gap the breadcrumb strip gives every other page. */
+main > section.hero:first-child { margin-top: 1.25rem; }
 section.hero {
   background: var(--wash);
   border-top: none;
@@ -135,9 +160,11 @@ section.hero h1 { margin-bottom: .5rem; }
 section.hero .lead {
   font-size: 1.1rem;
   color: var(--ink);
-  max-width: 42rem;
   margin-bottom: 1.5rem;
 }
+/* The contact page hero deliberately carries no CTA button. Without this its lead margin plus
+   the hero's own bottom padding left ~90px of empty wash under the last line. */
+section.hero .lead:last-child { margin-bottom: 0; }
 .cta {
   display: inline-block;
   background: var(--accent);
@@ -155,14 +182,41 @@ section.hero .lead {
   border-bottom: 1px solid var(--wash);
   padding: .75rem 0;
 }
+/* The FAQ block is the last thing on every page that has one, so its closing rule landed a few
+   dozen pixels above the footer's rule. Two near-parallel hairlines of different widths (one on
+   the column, one on the band) read as a mistake. The footer rule closes the list. */
+.faq details:last-child { border-bottom: none; }
+/* Padding (not just the line box) makes the tap target: the short one-line questions were
+   measuring ~26px tall, well under the 44px touch minimum, while longer ones already passed. */
 .faq summary {
   font-family: var(--font-head);
   font-weight: 700;
   cursor: pointer;
   color: var(--ink);
+  padding: .6rem 0;
+  /* Hanging indent. With the marker inside the text box, a question that wrapped (most of them
+     do at 390) put line two back under the triangle, so the question had a ragged left edge. */
+  list-style-position: outside;
+  margin-left: 1.15rem;
+  /* Same reason as the headings: on the reading measure a few questions wrap with one word
+     alone on line two. */
+  text-wrap: balance;
 }
 .faq summary::marker { color: var(--accent); }
-.faq p { margin-top: .5rem; }
+/* Answer aligns with the question text, not with the triangle. */
+.faq p { margin-top: .5rem; margin-left: 1.15rem; }
+
+/* Body lists. The copy wave turned many dense paragraphs into bullets, but adjacent list
+   items had no separation at all (measured 0-3px between 400+ item pairs sitewide), so a
+   6-item list read as one gray block and undid the point of bulleting it. The related-pages
+   mesh is excluded: it is a grid and sets its own gap. */
+section:not(.related) li + li { margin-top: .4rem; }
+/* The browser default is 40px, which on a phone spent 13% of the screen on empty indent and
+   pushed the longest content on the how-to pages into a measure narrower than its own prose.
+   1.15rem matches the FAQ question and related-item indents, so every hanging element on the
+   site steps off the reading column by the same amount. The longest ordered list is 6 items,
+   so a single digit plus its period always fits. */
+main ul, main ol { padding-left: 1.15rem; }
 
 /* Glossary-style definition lists: term needs to visually outrank its definition,
    which the browser default (indent only, no weight/family change) does not do. */
@@ -170,15 +224,21 @@ dl { margin: 0 0 1rem; }
 dt {
   font-family: var(--font-head);
   font-weight: 700;
-  margin-top: .75rem;
+  /* Bold alone did not carry it: DM Sans at the body size read no larger than the Inter
+     definition under it, and a .75rem pair gap barely beat the term-to-definition gap, so nine
+     glossary entries stacked into one grey block. */
+  font-size: 1.05rem;
+  margin-top: 1.35rem;
 }
 dt:first-of-type { margin-top: 0; }
 dd { margin: .15rem 0 0 0; font-size: .95rem; }
 
 /* Footer */
 footer.ft {
-  padding-top: 1.5rem;
-  padding-bottom: 2rem;
+  /* Same column axis as the article above it. min() because a percentage here resolves against
+     the viewport, not against the footer's own 72rem box, which would push the text 144px
+     right of the column on a wide screen. */
+  padding: 1.5rem max(1.25rem, calc((min(100%, 72rem) - var(--col)) / 2)) 2rem;
   border-top: 1px solid var(--wash);
   color: var(--ink);
 }
@@ -232,10 +292,33 @@ figure.diagram figcaption {
   text-align: center;
 }
 
-/* Tables that may overflow on narrow screens */
-.tblwrap { overflow-x: auto; }
+/* Tables that may overflow on narrow screens. The wrapper carries the bottom margin: the
+   last row's border-bottom otherwise sits flush against the paragraph that follows (measured
+   gap was 0px on every table at both widths), so the prose read as part of the table. */
+.tblwrap { overflow-x: auto; margin: 2rem 0; }
 table { border-collapse: collapse; width: 100%; }
-th, td { padding: .5rem .75rem; text-align: left; border-bottom: 1px solid var(--wash); }
+/* Auto layout hands width to the column with the most text, which on the one table whose second
+   cell is a full sentence squeezed every label in column one onto two lines. */
+th:first-child, td:first-child { min-width: 10rem; }
+/* Cell padding on the outer edges pushed the table's text a step off the reading column while
+   its tint band and row rules stayed on it. */
+th:first-child, td:first-child { padding-left: 0; }
+th:last-child, td:last-child { padding-right: 0; }
+th, td {
+  padding: .5rem .75rem;
+  text-align: left;
+  border-bottom: 1px solid var(--wash);
+  /* Rows are two cells of very different length. Centered, a 3-word label floated in the
+     middle of a 6-line cell with ~50px of blank above and below it. */
+  vertical-align: top;
+}
+/* Header row has to outrank the rows it labels: a --wash hairline and bold alone did not, and
+   on two pages the header text wraps exactly like the body text under it. */
+thead th {
+  background: var(--wash);
+  font-family: var(--font-head);
+  border-bottom: 2px solid var(--rule);
+}
 
 /* Skip link: visually hidden until keyboard focus reaches it, then jumps above everything. */
 .skip {
@@ -264,7 +347,9 @@ th, td { padding: .5rem .75rem; text-align: left; border-bottom: 1px solid var(-
 
 /* Breadcrumbs: a modest wayfinding strip above the hero band, mirrors the BreadcrumbList
    schema exactly. Muted so it never competes with the h1 that follows it. */
-.crumbs { padding-top: .85rem; }
+/* Sits directly in main, so it centers itself on --col the same way a section does. Otherwise
+   the trail hangs left of every other line of text on the page. */
+.crumbs { padding: .85rem max(1.25rem, calc((100% - var(--col)) / 2)) .6rem; }
 .crumbs ol {
   list-style: none;
   display: flex;
@@ -280,17 +365,22 @@ th, td { padding: .5rem .75rem; text-align: left; border-bottom: 1px solid var(-
 .crumbs li[aria-current="page"] { color: var(--ink); }
 
 /* Related-pages mesh: compact and modest, visually distinct from an in-copy body link
-   (bold heading-family label + a small muted note under it, laid out in a light grid). */
+   (bold heading-family label + a small muted note under it, laid out in a light stack).
+   One column at every width: split across two ~330px columns on the reading measure, most
+   notes wrapped to a second line ending in a single orphaned word, and a three-item block
+   left an empty cell. Each note fits on one line at full column width. */
 .related h2 { margin-bottom: 1rem; }
 .related ul {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
-  gap: .9rem;
+  gap: 1.1rem;
 }
 .related li {
-  border-left: 3px solid var(--wash);
+  /* --wash is all but invisible against the white page, which left the .9rem padding reading
+     as an unexplained indent rather than an accent rule. A hair darker gives the items edges. */
+  border-left: 3px solid var(--rule);
   padding-left: .9rem;
 }
 .related a {
@@ -306,13 +396,47 @@ th, td { padding: .5rem .75rem; text-align: left; border-bottom: 1px solid var(-
   margin-top: .15rem;
 }
 
+/* Narrow screens. Two things need help here that don't at desktop width:
+   1. Diagrams. The SVGs are drawn on 560-640 unit viewBoxes with 10-16 unit label text, so
+      how legible they are is purely a function of how much width they get. Inside the gutter
+      they were down to 270px, a 0.42-0.48 scale that rendered labels at 5-8px; bleeding the
+      figure out to both screen edges gets them to 382px. Deliberately no min-width: forcing
+      the SVG wider than the screen bought about 1.5px of label height and cost a clipped
+      diagram the reader has to swipe, which is the worse trade for a conceptual illustration.
+   2. Tables. Two columns of very unequal length in 350px. Both need the type a notch down and
+      the cells tighter before either side stops wrapping badly. */
+@media (max-width: 47.99rem) {
+  figure.diagram {
+    /* main no longer adds a gutter, so the section's own 1.25rem is all that stands between
+       the figure and the screen edge. */
+    margin-left: -1.25rem;
+    margin-right: -1.25rem;
+    padding: 1rem .25rem;
+    border-radius: 0;
+  }
+  /* A fixed 42% split was tuned on one table and hurt the other three: it starved the pricing
+     pages' long label column ("Competitive or multi market campaign" on three lines) while the
+     money column kept slack. Letting auto layout size each table to its own content, one notch
+     down in type, cut badly-wrapped cells from 9 to 3 across the site's four tables. The floor
+     stops the one table with a long sentence in column two from crushing its labels to 82px. */
+  table { font-size: .9rem; }
+  th, td { padding: .5rem .5rem; }
+  th:first-child, td:first-child { min-width: 7.5rem; }
+  /* Stacked related items need more air than the desktop grid: when a note wraps to two lines,
+     a .9rem gap put the next item's title almost on top of it. */
+  .related ul { gap: 1.25rem; }
+}
+
 @media (min-width: 48rem) {
   h1 { font-size: 2.6rem; }
   h2 { font-size: 1.75rem; }
   h3 { font-size: 1.3rem; }
   header.hd nav { order: 2; width: auto; }
   header.hd .tel { order: 3; }
-  section { padding: 3rem 1.25rem; }
+  section { padding-top: 3rem; padding-bottom: 3rem; }
   section.hero { padding-top: 4rem; padding-bottom: 4rem; }
-  .related ul { grid-template-columns: repeat(2, 1fr); gap: 1rem 1.5rem; }
+  /* Nav centers on the page axis rather than wherever space-between drops it, now that the
+     article below it establishes a strong centre line. */
+  header.hd .logo, header.hd .tel { flex: 1 1 0; }
+  header.hd .tel { text-align: right; }
 }
