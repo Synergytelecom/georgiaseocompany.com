@@ -264,6 +264,16 @@ footer.ft .legal {
   color: #5a6a61;
 }
 
+/* Standing measurement note (2026-08-05 owner-lens): one uniform small-print block on pages
+   that publish measured figures, replacing methodology disclaimers scattered through prose. */
+.measure-note {
+  font-size: .8rem;
+  color: #5a6a61;
+  margin-top: 2.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line, #e3e8e5);
+}
+
 /* Definition blocks (W1.5b): a quotable, standalone definition near the top of a service
    page, modestly set apart from ordinary body copy with a left accent border only. */
 p.def {
