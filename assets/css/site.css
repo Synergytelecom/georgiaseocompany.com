@@ -28,18 +28,35 @@
   font-style: normal;
   font-display: swap;
 }
+/* Display face for the pop-art comic brand (2026-08-12): headings, CTAs, action accents.
+   Body copy stays on Inter -- 183 pages of dense prose keep a reading face; the comic
+   personality lives in display type, frames, and color. */
+@font-face {
+  font-family: 'Bangers';
+  src: url('/assets/fonts/bangers-400.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
 
 :root {
-  --primary: #0f3d2e;
-  --accent: #e8963c;
-  --ink: #16211c;
+  /* Pop-art comic palette (Eric, 2026-08-12): red primary, black frames, yellow action
+     accents, cream paper wash. Anchored on the burst-wordmark logo. */
+  --primary: #E4002B;
+  --accent: #FFD100;
+  --ink: #0B0B0B;
   --bg: #ffffff;
-  --wash: #f4f7f5;
+  --wash: #FFF6E9;
   --font-head: 'DM Sans', system-ui, -apple-system, Arial, sans-serif;
+  --font-display: 'Bangers', 'DM Sans', system-ui, Arial, sans-serif;
   --font-body: 'Inter', system-ui, -apple-system, Arial, sans-serif;
   --gap: 1.25rem;
-  /* Hairline that has to actually be visible against white (--wash does not read as an edge). */
-  --rule: #cfdcd5;
+  /* Hairline that has to actually be visible against white and cream. */
+  --rule: #d9d2c4;
+  /* The comic frame: thick ink border + hard offset shadow, shared by cards, tables,
+     diagrams, and the CTA bubble. */
+  --frame: 3px solid var(--ink);
+  --pop: 5px 5px 0 var(--ink);
   /* The reading column. Every piece of article content -- prose, lists, headings, tables,
      diagrams, FAQ rows, the related mesh -- is laid out on this one measure, so the page has a
      single text column instead of a narrow paragraph floating in a much wider shell. */
@@ -71,8 +88,17 @@ h1, h2, h3 {
      single word alone on the last line. Balancing evens the lines out instead. */
   text-wrap: balance;
 }
-h1 { font-size: 1.9rem; }
-h2 { font-size: 1.4rem; }
+/* Display headings wear the comic face. Bangers is a single-weight face that sets wide and
+   loud, so h1/h2 move to it while h3 subheads stay on DM Sans -- three tiers of voice:
+   shout, speak, aside. Letter-spacing opens Bangers' tight fit at text sizes. */
+h1, h2 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: .04em;
+  line-height: 1.08;
+}
+h1 { font-size: 2.3rem; }
+h2 { font-size: 1.65rem; }
 h3 { font-size: 1.15rem; }
 /* h3 subheads sit inside flowing section copy, breaking up a long paragraph run, rather than
    opening their own container the way h1/h2 do. The shared heading rule above carries no top
@@ -91,23 +117,25 @@ h3 { margin-top: 1.75rem; }
    used to indent body copy 20px past the logo above it, which read as a misalignment). */
 main { width: 100%; max-width: 72rem; margin: 0 auto; padding: 0; }
 
-/* Header: logo / nav / tel. No sticky positioning. */
+/* Header: logo / nav / tel. No sticky positioning. The ink rule below it is the first
+   comic frame line on every page. */
 header.hd {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: .75rem;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid var(--wash);
+  padding-top: .6rem;
+  padding-bottom: .6rem;
+  border-bottom: 4px solid var(--ink);
 }
 header.hd .logo {
-  font-family: var(--font-head);
-  font-weight: 700;
-  font-size: 1.15rem;
-  color: var(--ink);
-  text-decoration: none;
+  display: inline-block;
+  line-height: 0;
+}
+header.hd .logo img {
+  height: 80px;
+  width: 80px;
 }
 header.hd nav {
   display: flex;
@@ -125,6 +153,7 @@ header.hd nav a {
   padding: .35rem 0;
 }
 header.hd nav a:hover { color: var(--primary); }
+header.hd nav a { font-weight: 600; }
 .tel {
   font-weight: 600;
   color: var(--primary);
@@ -147,7 +176,9 @@ section {
   max-width: 72rem;
   margin: 0 auto;
 }
-section + section { border-top: 1px solid var(--wash); }
+/* Panel gutters: sections separate with a real ink rule, so a page reads as a stack of
+   comic panels instead of one long scroll. */
+section + section { border-top: 2px solid var(--ink); }
 
 /* Hero */
 /* The seven pages with no breadcrumb (home, the hubs, about/contact/results) would otherwise
@@ -155,13 +186,22 @@ section + section { border-top: 1px solid var(--wash); }
    the header. This is the white gap the breadcrumb strip gives every other page. */
 main > section.hero:first-child { margin-top: 1.25rem; }
 section.hero {
-  background: var(--wash);
+  /* Cream paper with a Ben-Day halftone dot field -- the logo's world, as a band. */
+  background:
+    radial-gradient(circle, rgba(228, 0, 43, .09) 1.6px, transparent 1.6px) 0 0 / 17px 17px,
+    var(--wash);
   border-top: none;
+  border-bottom: 3px solid var(--ink);
   text-align: left;
   padding-top: 2.5rem;
   padding-bottom: 2.5rem;
 }
-section.hero h1 { margin-bottom: .5rem; }
+section.hero h1 {
+  margin-bottom: .5rem;
+  color: var(--primary);
+  /* The hard offset shadow is the superhero-masthead move, matched to the logo lettering. */
+  text-shadow: 2.5px 2.5px 0 var(--ink);
+}
 section.hero .lead {
   font-size: 1.1rem;
   color: var(--ink);
@@ -170,17 +210,30 @@ section.hero .lead {
 /* The contact page hero deliberately carries no CTA button. Without this its lead margin plus
    the hero's own bottom padding left ~90px of empty wash under the last line. */
 section.hero .lead:last-child { margin-bottom: 0; }
+/* The CTA is a yellow action bubble: comic frame, hard shadow, display lettering. */
 .cta {
   display: inline-block;
   background: var(--accent);
   color: var(--ink);
-  font-family: var(--font-head);
-  font-weight: 700;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.1rem;
+  letter-spacing: .05em;
   text-decoration: none;
-  padding: .75rem 1.5rem;
-  border-radius: .25rem;
+  padding: .65rem 1.5rem;
+  border: var(--frame);
+  border-radius: 999px;
+  box-shadow: var(--pop);
 }
-.cta:hover, .cta:focus { color: var(--ink); filter: brightness(.95); }
+.cta:hover, .cta:focus {
+  color: var(--ink);
+  transform: translate(-2px, -2px);
+  box-shadow: 7px 7px 0 var(--ink);
+}
+.cta:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--ink); }
+@media (prefers-reduced-motion: reduce) {
+  .cta:hover, .cta:focus, .cta:active { transform: none; box-shadow: var(--pop); }
+}
 
 /* FAQ */
 .faq details {
@@ -207,7 +260,7 @@ section.hero .lead:last-child { margin-bottom: 0; }
      alone on line two. */
   text-wrap: balance;
 }
-.faq summary::marker { color: var(--accent); }
+.faq summary::marker { color: var(--primary); }
 /* Answer aligns with the question text, not with the triangle. */
 .faq p { margin-top: .5rem; margin-left: 1.15rem; }
 
@@ -238,46 +291,47 @@ dt {
 dt:first-of-type { margin-top: 0; }
 dd { margin: .15rem 0 0 0; font-size: .95rem; }
 
-/* Footer */
+/* Footer: the closing ink panel of every page. */
 footer.ft {
   /* Same column axis as the article above it. min() because a percentage here resolves against
      the viewport, not against the footer's own 72rem box, which would push the text 144px
      right of the column on a wide screen. */
-  padding: 1.5rem max(1.25rem, calc((min(100%, 72rem) - var(--col)) / 2)) 2rem;
-  border-top: 1px solid var(--wash);
-  color: var(--ink);
+  padding: 1.75rem max(1.25rem, calc((min(100%, 72rem) - var(--col)) / 2)) 2rem;
+  border-top: 4px solid var(--ink);
+  background: var(--ink);
+  color: #f3efe6;
 }
 footer.ft p { margin: 0 0 .25rem; }
 footer.ft .links {
   font-size: .85rem;
 }
 footer.ft .links a {
-  color: var(--primary);
+  color: var(--accent);
   text-decoration: underline;
 }
 footer.ft .links a:hover,
 footer.ft .links a:focus {
-  color: var(--ink);
+  color: #ffffff;
 }
 footer.ft .legal {
   font-size: .8rem;
-  color: #5a6a61;
+  color: #a9a294;
 }
 
 /* Standing measurement note (2026-08-05 owner-lens): one uniform small-print block on pages
    that publish measured figures, replacing methodology disclaimers scattered through prose. */
 .measure-note {
   font-size: .8rem;
-  color: #5a6a61;
+  color: #6a6458;
   margin-top: 2.5rem;
   padding-top: 1rem;
-  border-top: 1px solid var(--line, #e3e8e5);
+  border-top: 1px solid var(--rule);
 }
 
 /* Definition blocks (W1.5b): a quotable, standalone definition near the top of a service
    page, modestly set apart from ordinary body copy with a left accent border only. */
 p.def {
-  border-left: 3px solid var(--accent);
+  border-left: 4px solid var(--primary);
   padding-left: 1rem;
   margin: 0 0 1.25rem;
 }
@@ -286,11 +340,14 @@ p.def {
    a wash background so the white SERP mockup (the one diagram with a white inner surface)
    reads as a card; svg text carries no font-family of its own, so it inherits DM Sans here
    rather than each diagram hardcoding a font stack. */
+/* Diagrams sit in comic frames now: ink border, hard shadow, white surface. */
 figure.diagram {
   margin: 1.75rem 0;
   padding: 1.25rem;
-  background: var(--wash);
-  border-radius: .5rem;
+  background: var(--bg);
+  border: var(--frame);
+  border-radius: .35rem;
+  box-shadow: var(--pop);
 }
 figure.diagram svg {
   max-width: 100%;
@@ -306,6 +363,29 @@ figure.diagram figcaption {
   color: #5a6a61;
   text-align: center;
 }
+
+/* Closing band (renderer p.closing): the final panel of every page, inverted to ink with a
+   faint yellow halftone -- the page ends on a black comic frame with a yellow shout. */
+section.closing {
+  background:
+    radial-gradient(circle, rgba(255, 209, 0, .12) 1.5px, transparent 1.5px) 0 0 / 16px 16px,
+    var(--ink);
+  color: #f3efe6;
+  border-top: none;
+  margin-top: .5rem;
+}
+section.closing h2 {
+  color: var(--accent);
+  text-shadow: 2px 2px 0 rgba(228, 0, 43, .55);
+}
+section.closing a:not(.cta) { color: var(--accent); }
+section.closing .tel { color: var(--accent); }
+/* On the ink panel the bubble's ink border and shadow vanish; a white hard shadow keeps
+   the pop. */
+section.closing .cta { box-shadow: 5px 5px 0 #ffffff; }
+section.closing .cta:hover, section.closing .cta:focus { box-shadow: 7px 7px 0 #ffffff; }
+section.closing .cta:active { box-shadow: 2px 2px 0 #ffffff; }
+section.closing .smallprint { color: #a9a294; }
 
 /* The FROM NOWHERE comic. Everything below is scoped to `.fn`, the class the three comic act
    sections on /proof/junk-n-your-trunk/ carry, so this whole block (including its keyframes,
@@ -435,9 +515,9 @@ th, td {
 /* Header row has to outrank the rows it labels: a --wash hairline and bold alone did not, and
    on two pages the header text wraps exactly like the body text under it. */
 thead th {
-  background: var(--wash);
+  background: rgba(255, 209, 0, .3);
   font-family: var(--font-head);
-  border-bottom: 2px solid var(--rule);
+  border-bottom: 2px solid var(--ink);
 }
 
 /* Skip link: visually hidden until keyboard focus reaches it, then jumps above everything. */
@@ -498,9 +578,7 @@ thead th {
   gap: 1.1rem;
 }
 .related li {
-  /* --wash is all but invisible against the white page, which left the .9rem padding reading
-     as an unexplained indent rather than an accent rule. A hair darker gives the items edges. */
-  border-left: 3px solid var(--rule);
+  border-left: 3px solid var(--primary);
   padding-left: .9rem;
 }
 .related a {
@@ -526,6 +604,9 @@ thead th {
    2. Tables. Two columns of very unequal length in 350px. Both need the type a notch down and
       the cells tighter before either side stops wrapping badly. */
 @media (max-width: 47.99rem) {
+  header.hd .logo img { height: 60px; width: 60px; }
+  /* At the screen-edge bleed the hard shadow would clip; drop it and keep the frame. */
+  figure.diagram { box-shadow: none; }
   figure.diagram {
     /* main no longer adds a gutter, so the section's own 1.25rem is all that stands between
        the figure and the screen edge. */
@@ -548,8 +629,8 @@ thead th {
 }
 
 @media (min-width: 48rem) {
-  h1 { font-size: 2.6rem; }
-  h2 { font-size: 1.75rem; }
+  h1 { font-size: 3.1rem; }
+  h2 { font-size: 2rem; }
   h3 { font-size: 1.3rem; }
   header.hd nav { order: 2; width: auto; }
   header.hd .tel { order: 3; }
