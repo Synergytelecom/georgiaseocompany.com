@@ -364,6 +364,17 @@ figure.diagram figcaption {
   text-align: center;
 }
 
+/* In-flow flyby divider: the hero streaking across a section break, all widths. */
+img.flyby {
+  display: block;
+  height: 120px;
+  width: auto;
+  margin: 1.75rem auto 0;
+}
+@media (max-width: 47.99rem) {
+  img.flyby { height: 88px; }
+}
+
 /* The mascot. Hero pose on pages that opt in (home), closing pose sitewide. Both are
    decorative absolutely-positioned art living in the shell's side margins, hidden below
    62rem where the reading column takes the full width and they would sit on the copy. */
