@@ -364,9 +364,40 @@ figure.diagram figcaption {
   text-align: center;
 }
 
+/* The mascot. Hero pose on pages that opt in (home), closing pose sitewide. Both are
+   decorative absolutely-positioned art living in the shell's side margins, hidden below
+   62rem where the reading column takes the full width and they would sit on the copy. */
+section.hero { position: relative; }
+.mascot-hero { display: none; }
+.mascot-closing { display: none; }
+@media (min-width: 62rem) {
+  section.hero:has(.mascot-hero) h1,
+  section.hero:has(.mascot-hero) .lead { max-width: 30rem; }
+  .mascot-hero {
+    display: block;
+    position: absolute;
+    right: 2rem;
+    bottom: 0;
+    height: 92%;
+    max-height: 330px;
+    width: auto;
+  }
+  .mascot-closing {
+    display: block;
+    position: absolute;
+    right: 1.5rem;
+    bottom: .75rem;
+    height: 215px;
+    width: auto;
+    /* a whisper of drop shadow lifts him off the ink panel */
+    filter: drop-shadow(3px 3px 0 rgba(255, 209, 0, .25));
+  }
+}
+
 /* Closing band (renderer p.closing): the final panel of every page, inverted to ink with a
    faint yellow halftone -- the page ends on a black comic frame with a yellow shout. */
 section.closing {
+  position: relative;
   background:
     radial-gradient(circle, rgba(255, 209, 0, .12) 1.5px, transparent 1.5px) 0 0 / 16px 16px,
     var(--ink);
