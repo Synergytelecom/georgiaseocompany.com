@@ -683,3 +683,16 @@ thead th {
   header.hd .logo, header.hd .tel { flex: 1 1 0; }
   header.hd .tel { text-align: right; }
 }
+
+/* THE KEYS story page (/story/). Scoped under .keys, same isolation pattern as .fn:
+   nothing here reaches other pages. Lettering is real text in figcaptions so the
+   strip stays indexable and screen-readable. */
+.keys figure.kp { margin: 1.8rem 0; border: var(--frame); box-shadow: var(--pop); background: #fff; }
+.keys .kp img { display: block; width: 100%; height: auto; }
+.keys .kp figcaption { border-top: 3px solid var(--ink); background: var(--wash); padding: 0.75rem 1.1rem 0.9rem; }
+.keys .kp-say { display: block; background: #fff; border: 2px solid var(--ink); border-radius: 16px; padding: 0.4rem 0.9rem; margin: 0.45rem auto; max-width: 34rem; box-shadow: 2px 2px 0 rgba(11, 11, 11, 0.18); }
+.keys .kp-say b { font-family: var(--font-display); font-weight: 400; letter-spacing: 0.04em; }
+.keys .kp-say.hero b { color: var(--primary); }
+.keys .kp-say.villain b { color: #1c7a3d; }
+.keys .kp-say.owner b { color: #555; }
+.keys .kp-cap { display: block; text-align: center; font-style: italic; margin: 0.4rem 0 0; }
