@@ -696,3 +696,7 @@ thead th {
 .keys .kp-say.villain b { color: #1c7a3d; }
 .keys .kp-say.owner b { color: #555; }
 .keys .kp-cap { display: block; text-align: center; font-style: italic; margin: 0.4rem 0 0; }
+
+/* The Matchups grid on /story/: two-up on desktop, single column under 48rem. */
+.keys .vs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(21rem, 1fr)); gap: 1.2rem; }
+.keys .vs-grid figure.kp { margin: 0; }
