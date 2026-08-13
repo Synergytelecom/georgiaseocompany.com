@@ -47,6 +47,16 @@
   --ink: #0B0B0B;
   --bg: #ffffff;
   --wash: #FFF6E9;
+  /* The comic page itself (2026-08-13). Body was pure white, so texture only existed in the
+     hero and closing bands and everything between read as a plain document. Now the page is
+     warm newsprint carrying a Ben-Day field, and each content section sits on it as a white
+     panel with an ink frame -- which is literally how a comic page is built. Deeper than
+     --wash on purpose: white panels have to read as panels against it. */
+  --paper: #F3E7D3;
+  --paper-dot: rgba(11, 11, 11, .055);
+  /* Panels carry a lighter offset than --pop: 5px on every section down a 184-page site is
+     shouting, 3px reads as ink-on-paper. */
+  --pop-panel: 3px 3px 0 var(--ink);
   --font-head: 'DM Sans', system-ui, -apple-system, Arial, sans-serif;
   --font-display: 'Bangers', 'DM Sans', system-ui, Arial, sans-serif;
   --font-body: 'Inter', system-ui, -apple-system, Arial, sans-serif;
@@ -67,7 +77,9 @@
 html { -webkit-text-size-adjust: 100%; }
 body {
   margin: 0;
-  background: var(--bg);
+  background:
+    radial-gradient(circle, var(--paper-dot) 1.5px, transparent 1.5px) 0 0 / 18px 18px,
+    var(--paper);
   color: var(--ink);
   font-family: var(--font-body);
   font-size: 1rem;
@@ -176,9 +188,25 @@ section {
   max-width: 72rem;
   margin: 0 auto;
 }
-/* Panel gutters: sections separate with a real ink rule, so a page reads as a stack of
-   comic panels instead of one long scroll. */
-section + section { border-top: 2px solid var(--ink); }
+/* Panel gutters: every content section is a white panel framed in ink, sitting on the paper
+   with a real gutter between, so the page reads as a stack of comic panels instead of one long
+   scroll. This replaces the old shared border-top: with full frames the rule would double up. */
+main > section {
+  background: var(--bg);
+  border: var(--frame);
+  box-shadow: var(--pop-panel);
+  border-radius: 2px;
+  margin-bottom: 1.1rem;
+}
+/* The hero and the closing band carry their own fills and keep them; they just join the
+   panel geometry. */
+main > section.hero { border-bottom: var(--frame); }
+main > section.closing { margin-bottom: 0; }
+@media (max-width: 47.99rem) {
+  /* On a phone the offset shadow would push the panel off-centre inside the viewport, so
+     panels keep the frame and drop the shadow. */
+  main > section { box-shadow: none; }
+}
 
 /* Hero */
 /* The seven pages with no breadcrumb (home, the hubs, about/contact/results) would otherwise
@@ -739,4 +767,22 @@ section.art .sec-art {
   section.art-left .sec-art { grid-column: 1; }
   /* The roaming flyby mascot would collide with a side column, so art sections drop it. */
   section.art img.flyby { display: none; }
+
+  /* ---------------------------------------------------------- list panels use their width
+     Prose belongs on the 42rem measure. Link lists do not: the related mesh and the FAQ were
+     stacking in a narrow ribbon with roughly 30rem of empty panel beside them, which read as
+     a column that had fallen over rather than a designed measure. These two panels get a
+     wider measure, and the related mesh runs two-up so four links fill the space as a block
+     instead of a queue. The FAQ stays single-column on purpose: <details> rows in two columns
+     reflow the neighbouring column every time one is opened. */
+  main > section.related,
+  main > section.faq {
+    padding-left: max(1.25rem, calc((100% - 58rem) / 2));
+    padding-right: max(1.25rem, calc((100% - 58rem) / 2));
+  }
+  .related ul {
+    grid-template-columns: 1fr 1fr;
+    column-gap: 2.75rem;
+    row-gap: 1.35rem;
+  }
 }
