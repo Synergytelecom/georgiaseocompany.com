@@ -134,8 +134,8 @@ header.hd .logo {
   line-height: 0;
 }
 header.hd .logo img {
-  height: 80px;
-  width: 80px;
+  height: 128px;
+  width: 128px;
 }
 header.hd nav {
   display: flex;
@@ -646,7 +646,7 @@ thead th {
    2. Tables. Two columns of very unequal length in 350px. Both need the type a notch down and
       the cells tighter before either side stops wrapping badly. */
 @media (max-width: 47.99rem) {
-  header.hd .logo img { height: 60px; width: 60px; }
+  header.hd .logo img { height: 88px; width: 88px; }
   /* At the screen-edge bleed the hard shadow would clip; drop it and keep the frame. */
   figure.diagram { box-shadow: none; }
   figure.diagram {
