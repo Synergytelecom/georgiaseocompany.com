@@ -700,3 +700,43 @@ thead th {
 /* The Matchups grid on /story/: two-up on desktop, single column under 48rem. */
 .keys .vs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(21rem, 1fr)); gap: 1.2rem; }
 .keys .vs-grid figure.kp { margin: 0; }
+
+/* ------------------------------------------------------------------ section art
+   A section carrying `art` puts a VS matchup panel beside its copy, alternating side
+   by section index (even = right, odd = left). These panels are 1200x670 two-character
+   scenes: they need real width to read, so below 64rem they stop being a side column
+   and sit full-width under the heading instead of shrinking into mush. Decorative by
+   intent (empty alt, aria-hidden) because the copy carries every fact. */
+section.art .sec-art {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: var(--frame);
+  box-shadow: var(--pop);
+  background: #fff;
+  margin: 1.1rem 0 0.4rem;
+}
+@media (min-width: 64rem) {
+  /* Sections are normally padded so their content sits on the --col (42rem) reading measure,
+     which leaves ~24rem of dead white inside the 72rem shell. Art sections spend exactly that
+     dead space on the panel: the prose keeps its full measure, the art takes the margin. */
+  section.art {
+    display: grid;
+    grid-template-columns: minmax(0, var(--col)) minmax(0, 1fr);
+    grid-template-rows: auto 1fr;
+    column-gap: 2.5rem;
+    align-items: start;
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
+  section.art > h2 { grid-column: 1; grid-row: 1; }
+  section.art .sec-body { grid-column: 1; grid-row: 2; min-width: 0; }
+  section.art .sec-art { grid-column: 2; grid-row: 1 / span 2; align-self: start; margin: 0; }
+  /* Odd sections flip: art on the left, heading and copy on the right. */
+  section.art-left { grid-template-columns: minmax(0, 1fr) minmax(0, var(--col)); }
+  section.art-left > h2,
+  section.art-left .sec-body { grid-column: 2; }
+  section.art-left .sec-art { grid-column: 1; }
+  /* The roaming flyby mascot would collide with a side column, so art sections drop it. */
+  section.art img.flyby { display: none; }
+}
