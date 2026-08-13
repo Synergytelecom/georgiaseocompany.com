@@ -725,6 +725,110 @@ thead th {
 .keys .kp-say.owner b { color: #555; }
 .keys .kp-cap { display: block; text-align: center; font-style: italic; margin: 0.4rem 0 0; }
 
+/* ------------------------------------------------------------------------- icon marks
+   Drawn from the villain matchup props (georgia/brand/icons/README.md). Used as list bullets
+   and FAQ markers, where a 48px mark reads and a 1200x670 panel cannot. */
+.related li {
+  background-image: url('/assets/img/icons/key.svg');
+  background-repeat: no-repeat;
+  background-position: 0 .15rem;
+  background-size: 22px 22px;
+  padding-left: 2rem;
+  /* The old red left-rule is replaced by the mark, so drop it rather than run both. */
+  border-left: none;
+}
+.faq summary::marker { content: ''; }
+.faq summary {
+  background-image: url('/assets/img/icons/magnifier.svg');
+  background-repeat: no-repeat;
+  background-position: 0 .55rem;
+  background-size: 20px 20px;
+  padding-left: 1.9rem;
+}
+.faq details[open] summary {
+  background-image: url('/assets/img/icons/chart-up.svg');
+}
+
+/* ------------------------------------------------------------------- the audit lead form
+   Ours, not a GHL iframe, so it inherits the panel language: ink frame, hard offset, cream
+   fill against the white panel it sits on. Posts to forge-lead-worker. */
+.leadform {
+  margin: 1.6rem 0 .5rem;
+  padding: 1.25rem;
+  background: var(--wash);
+  border: var(--frame);
+  box-shadow: var(--pop-panel);
+  border-radius: 2px;
+}
+.leadform-h { margin: 0 0 .9rem; font-family: var(--font-display); font-size: 1.5rem; letter-spacing: .02em; }
+.lf-row { margin-bottom: .85rem; }
+.lf-row label { display: block; font-family: var(--font-head); font-weight: 700; font-size: .95rem; margin-bottom: .3rem; }
+.lf-row .req { color: var(--primary); }
+.lf-row input, .lf-row textarea {
+  width: 100%;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  padding: .6rem .7rem;
+  border: 2px solid var(--ink);
+  border-radius: 2px;
+  background: #fff;
+  color: var(--ink);
+}
+.lf-row textarea { resize: vertical; }
+.lf-row input:focus-visible, .lf-row textarea:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 1px;
+}
+.lf-hint { display: block; font-size: .85rem; color: #5a5348; margin-top: .25rem; }
+/* Honeypot. Off-screen rather than display:none so a bot filling every field still trips it,
+   and aria-hidden + tabindex -1 keep it away from real people and screen readers. */
+.lf-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.leadform button.cta { margin-top: .35rem; }
+.leadform button.cta[disabled] { opacity: .65; cursor: default; }
+.lf-status { margin: .8rem 0 0; font-weight: 600; min-height: 1.2em; }
+.lf-status.is-good { color: #1c7a3d; }
+.lf-status.is-bad { color: var(--primary); }
+
+/* ------------------------------------------------------------------ mobile sticky CTA
+   Phone and audit button pinned to the bottom on phones only. Desktop already has both in
+   the header, where they do not cost scroll space. The body gets bottom padding to match so
+   the bar can never cover the last line of the footer. */
+.stickycta { display: none; }
+@media (max-width: 47.99rem) {
+  .stickycta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: .5rem;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 40;
+    padding: .55rem .7rem calc(.55rem + env(safe-area-inset-bottom, 0px));
+    background: var(--ink);
+    border-top: 3px solid var(--accent);
+  }
+  .stickycta a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    /* 44px minimum touch target. */
+    min-height: 44px;
+    padding: .5rem .4rem;
+    border-radius: 4px;
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: .95rem;
+    text-decoration: none;
+    border: 2px solid var(--ink);
+  }
+  .sticky-tel { background: #fff; color: var(--ink); }
+  .sticky-cta { background: var(--accent); color: var(--ink); }
+  .stickycta a:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+  body { padding-bottom: 4.6rem; }
+}
+
 /* The Matchups grid on /story/: two-up on desktop, single column under 48rem. */
 .keys .vs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(21rem, 1fr)); gap: 1.2rem; }
 .keys .vs-grid figure.kp { margin: 0; }

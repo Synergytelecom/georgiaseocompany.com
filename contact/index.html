@@ -24,7 +24,42 @@
 <main id="main">
 
 <section class="hero"><h1>Request Your Free Visibility Audit</h1><p class="lead">Reach out and we'll check where you rank today, how your Google Business Profile is set, and what your website is doing with the traffic it already gets.</p><img class="mascot-hero" src="/assets/img/mascot/pose-wave.webp" alt="" aria-hidden="true" width="340" height="340"></section>
-<section><h2>Ask for a Free SEO Audit</h2><p>The fastest way to reach Georgia SEO Company is a call to <a class="tel" href="tel:+17629997265">(762) 999-RANK</a>. Ask for a free SEO audit, and you'll talk to the person who does the work.</p><div class="contact-form" data-ghl-form-id="" aria-hidden="true"></div></section>
+<section><h2>Ask for a Free SEO Audit</h2><p>The fastest way to reach Georgia SEO Company is a call to <a class="tel" href="tel:+17629997265">(762) 999-RANK</a>. Ask for a free SEO audit, and you'll talk to the person who does the work.</p><div class="leadform">
+
+<form id="contact-audit" class="leadform-form" method="post" action="https://forge-lead-worker.synergycloud.workers.dev/lead?client=georgia-seo-company" novalidate>
+  <div class="lf-row">
+    <label for="contact-audit-name">Your name <span class="req" aria-hidden="true">*</span></label>
+    <input id="contact-audit-name" name="name" type="text" autocomplete="name" required>
+  </div>
+  <div class="lf-row">
+    <label for="contact-audit-phone">Phone <span class="req" aria-hidden="true">*</span></label>
+    <input id="contact-audit-phone" name="phone" type="tel" autocomplete="tel" required>
+  </div>
+  <div class="lf-row">
+    <label for="contact-audit-email">Email</label>
+    <input id="contact-audit-email" name="email" type="email" autocomplete="email">
+  </div>
+  <div class="lf-row">
+    <label for="contact-audit-website">Your website</label>
+    <input id="contact-audit-website" name="website" type="text" inputmode="url" placeholder="yourbusiness.com">
+    <span class="lf-hint">If you do not have one yet, leave this blank and say so below.</span>
+  </div>
+  <div class="lf-row">
+    <label for="contact-audit-town">Town you want customers from</label>
+    <input id="contact-audit-town" name="town" type="text" autocomplete="address-level2">
+  </div>
+  <div class="lf-row">
+    <label for="contact-audit-notes">What is going on</label>
+    <textarea id="contact-audit-notes" name="notes" rows="4" placeholder="Fewer calls than last year, a competitor outranking you, a new site that never showed up. Whatever prompted the search."></textarea>
+  </div>
+  <div class="lf-hp" aria-hidden="true">
+    <label for="contact-audit-company">Company</label>
+    <input id="contact-audit-company" name="company" type="text" tabindex="-1" autocomplete="off">
+  </div>
+  <button class="cta" type="submit">Request the free audit</button>
+  <p class="lf-status" role="status" aria-live="polite"></p>
+</form>
+</div></section>
 <section><h2>What Happens After You Reach Out</h2><p>It goes the same way every time. We ask a few questions about the business and the market it competes in, then we run the audit: where you rank in your market today, how healthy the Google Business Profile is, and what the website is doing with the traffic it already gets.</p>
 <p>You get that read before any contract. If the work isn't worth what it would cost you, we'll say so. If it's something you can fix yourself, we'll tell you that too.</p>
 <h3>If It Makes Sense to Move Forward</h3>
@@ -38,4 +73,59 @@
 <p>Call <a class="tel" href="tel:+17629997265">(762) 999-RANK</a> and ask for a free SEO audit.</p><img class="mascot-closing" src="/assets/img/mascot/pose-cta-point.webp" alt="" aria-hidden="true" loading="lazy" width="230" height="230"></section>
 </main>
 <footer class="ft"><p>Georgia SEO Company · 246 N 5th Ave SW, Rome, GA 30165 · Serving Georgia</p><p class="links"><a href="/about/">About</a> · <a href="/contact/">Contact</a></p><p class="legal">Georgia SEO Company is a registered Georgia company.</p></footer>
+<div class="stickycta" role="complementary" aria-label="Call or request an audit">
+<a class="sticky-tel" href="tel:+17629997265"><span aria-hidden="true">&#9742;</span> (762) 999-RANK</a>
+<a class="sticky-cta" href="/contact/">Free SEO Audit</a>
+</div>
+<script>
+(function () {
+  var PHONE = '(762) 999-RANK';
+  document.querySelectorAll('form.leadform-form').forEach(function (form) {
+    var status = form.querySelector('.lf-status');
+    var button = form.querySelector('button[type=submit]');
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var name = form.querySelector('[name=name]');
+      var phone = form.querySelector('[name=phone]');
+      if (!name.value.trim() || !phone.value.trim()) {
+        status.className = 'lf-status is-bad';
+        status.textContent = 'Please add your name and a phone number so we can reach you.';
+        (name.value.trim() ? phone : name).focus();
+        return;
+      }
+      var data = {};
+      new FormData(form).forEach(function (v, k) { data[k] = v; });
+      button.disabled = true;
+      var original = button.textContent;
+      button.textContent = 'Sending...';
+      status.className = 'lf-status';
+      status.textContent = '';
+      fetch(form.action, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      }).then(function (r) {
+        // The worker answers 503 when the lead reached nowhere. Never show success for it.
+        if (!r.ok) throw new Error('not stored');
+        return r.json();
+      }).then(function () {
+        form.querySelector('.lf-row').scrollIntoView({ block: 'nearest' });
+        status.className = 'lf-status is-good';
+        status.textContent = 'Got it. Eric will call you back at the number you gave.';
+        form.reset();
+        button.textContent = original;
+        button.disabled = false;
+      }).catch(function () {
+        // Never a green checkmark for a lead that reached nowhere. Give a tappable number
+        // instead of a dead end, so the visitor's intent survives the failure.
+        status.className = 'lf-status is-bad';
+        status.innerHTML = 'That did not send. Call <a href="tel:+17629997265">' + PHONE +
+          '</a> and we will take it down by phone.';
+        button.textContent = original;
+        button.disabled = false;
+      });
+    });
+  });
+})();
+</script>
 </body></html>
