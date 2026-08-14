@@ -20,7 +20,7 @@
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"ProfessionalService","@id":"https://www.georgiaseocompany.com/#business","name":"Georgia SEO Company","url":"https://www.georgiaseocompany.com/","description":"SEO and web design for Georgia businesses","areaServed":[{"@type":"City","name":"Rome"},{"@type":"City","name":"Cartersville"},{"@type":"City","name":"Calhoun"},{"@type":"City","name":"Dalton"},{"@type":"City","name":"Cedartown"},{"@type":"City","name":"Summerville"},{"@type":"City","name":"Canton"},{"@type":"City","name":"Woodstock"},{"@type":"City","name":"Kennesaw"},{"@type":"City","name":"Acworth"},{"@type":"City","name":"Marietta"},{"@type":"City","name":"Dallas"},{"@type":"City","name":"Douglasville"},{"@type":"City","name":"Jasper"},{"@type":"City","name":"Ellijay"},{"@type":"City","name":"Blue Ridge"},{"@type":"City","name":"Ringgold"},{"@type":"City","name":"Adairsville"},{"@type":"City","name":"Rockmart"},{"@type":"City","name":"Cave Spring"}],"address":{"@type":"PostalAddress","streetAddress":"246 N 5th Ave SW","addressLocality":"Rome","addressRegion":"GA","postalCode":"30165","addressCountry":"US"},"telephone":"+17629997265"},{"@type":"WebSite","@id":"https://www.georgiaseocompany.com/#website","url":"https://www.georgiaseocompany.com/","name":"Georgia SEO Company","publisher":{"@id":"https://www.georgiaseocompany.com/#business"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Blog","item":"https://www.georgiaseocompany.com/blog/"},{"@type":"ListItem","position":2,"name":"Local SEO Checklist","item":"https://www.georgiaseocompany.com/blog/local-seo-checklist/"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Which item on a local SEO checklist should come first?","acceptedAnswer":{"@type":"Answer","text":"The primary category on your Google Business Profile, then the service area list. Those two decide which searches your listing can appear on at all, so work done further down the list has a lower ceiling until they are right."}},{"@type":"Question","name":"Can an owner really finish this in one afternoon?","acceptedAnswer":{"@type":"Answer","text":"The profile half, yes. Category, service areas, hours, services, photos, a description, and the first review requests fit inside a few hours. The website half runs longer because it means building pages, and that part is measured in weeks."}},{"@type":"Question","name":"How soon after the profile work would a position actually change?","acceptedAnswer":{"@type":"Answer","text":"A category correction can start showing on a search like plumber near me inside a few weeks, since Google rereads the listing constantly. Website changes move slower, usually a quarter before new pages settle into a position worth reporting."}},{"@type":"Question","name":"Does any of this apply to a business with no storefront?","acceptedAnswer":{"@type":"Answer","text":"All of it, with one change. A crew whose work happens on the customer's property leaves the street line off the public card and names its towns instead. Get that switch backwards and the reach never recovers, whatever else you fix."}},{"@type":"Question","name":"Are directory listings still worth the afternoon they take?","acceptedAnswer":{"@type":"Answer","text":"The big ones are, and the reason is consistency rather than traffic. Records that disagree about your name, address, or phone give Google conflicting information about a business that should look settled. Fix the handful people actually use and skip the rest."}}]}]}</script>
 </head><body>
 <a class="skip" href="#main">Skip to content</a>
-<header class="hd"><a class="logo" href="/" aria-label="Georgia SEO Company home"><img src="/assets/img/logo.svg" alt="Georgia SEO Company" width="128" height="128"></a><nav><a href="/seo-services/">Services</a><a href="/industries/">Industries</a><a href="/rome-seo/">Locations</a><a href="/seo-pricing/">Pricing</a><a href="/what-is-seo/">Learn</a><a href="/story/">Story</a><a href="/results/">Results</a><a href="/contact/">Contact</a></nav><a class="tel" href="tel:+17629997265">(762) 999-RANK</a></header>
+<header class="hd"><a class="logo" href="/" aria-label="Georgia SEO Company home"><img src="/assets/img/logo.svg" alt="Georgia SEO Company" width="160" height="160"></a><button class="navtoggle" type="button" aria-expanded="false" aria-controls="sitenav" aria-label="Menu"><span class="bars" aria-hidden="true"></span></button><nav id="sitenav"><a href="/seo-services/">Services</a><a href="/industries/">Industries</a><a href="/rome-seo/">Locations</a><a href="/seo-pricing/">Pricing</a><a href="/what-is-seo/">Learn</a><a href="/story/">Story</a><a href="/results/">Results</a><a href="/contact/">Contact</a></nav><a class="tel" href="tel:+17629997265">(762) 999-RANK</a></header>
 <main id="main">
 <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/blog/">Blog</a></li><li aria-current="page">Local SEO Checklist</li></ol></nav>
 <section class="hero"><h1>The Local SEO Checklist, in the Order That Pays</h1><p class="lead">Every item here is free to do and free to check. The order is the part worth borrowing, because the first two lines move a listing further than the rest of the page put together.</p><a class="cta" href="/contact/">Get a free visibility audit</a><img class="mascot-hero" src="/assets/img/mascot/pose-cta-point.webp" alt="" aria-hidden="true" width="340" height="340"></section>
@@ -97,5 +97,22 @@
 <a class="sticky-tel" href="tel:+17629997265"><span aria-hidden="true">&#9742;</span> (762) 999-RANK</a>
 <a class="sticky-cta" href="/contact/">Free SEO Audit</a>
 </div>
-
+<script>
+(function () {
+  var h = document.querySelector('header.hd');
+  var b = h && h.querySelector('.navtoggle');
+  var nav = h && h.querySelector('nav');
+  if (!h || !b || !nav) return;
+  h.classList.add('js-nav');
+  function set(open) {
+    h.classList.toggle('nav-open', open);
+    b.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+  b.addEventListener('click', function () { set(!h.classList.contains('nav-open')); });
+  // Close on the way out. Same-origin navigations can keep the old DOM painted for a beat,
+  // and an open menu sitting over the incoming page reads as a rendering bug.
+  nav.addEventListener('click', function (e) { if (e.target.closest('a')) set(false); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') set(false); });
+})();
+</script>
 </body></html>

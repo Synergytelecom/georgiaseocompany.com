@@ -146,8 +146,47 @@ header.hd .logo {
   line-height: 0;
 }
 header.hd .logo img {
-  height: 128px;
-  width: 128px;
+  height: 160px;
+  width: 160px;
+}
+/* Mobile menu button. Styled here, revealed only in the narrow breakpoint below, and only
+   once the script adds .js-nav. Same chunky treatment as the panels: ink frame, hard offset
+   shadow, and a press that moves the button onto its own shadow. */
+.navtoggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  padding: 0;
+  background: var(--wash);
+  border: var(--frame);
+  box-shadow: var(--pop-panel);
+  border-radius: 6px;
+  cursor: pointer;
+  color: var(--ink);
+}
+.navtoggle:active { transform: translate(3px, 3px); box-shadow: none; }
+.navtoggle .bars { position: relative; }
+.navtoggle .bars,
+.navtoggle .bars::before,
+.navtoggle .bars::after {
+  display: block;
+  width: 22px;
+  height: 3px;
+  background: currentColor;
+  border-radius: 2px;
+}
+.navtoggle .bars::before,
+.navtoggle .bars::after { content: ''; position: absolute; left: 0; }
+.navtoggle .bars::before { top: -7px; }
+.navtoggle .bars::after { top: 7px; }
+/* Open: the three bars collapse into a close X, so the same control reads as "shut this". */
+header.hd.nav-open .navtoggle .bars { background: transparent; }
+header.hd.nav-open .navtoggle .bars::before { top: 0; transform: rotate(45deg); }
+header.hd.nav-open .navtoggle .bars::after { top: 0; transform: rotate(-45deg); }
+@media (prefers-reduced-motion: no-preference) {
+  .navtoggle .bars, .navtoggle .bars::before, .navtoggle .bars::after { transition: transform .15s ease, top .15s ease; }
 }
 header.hd nav {
   display: flex;
@@ -674,7 +713,36 @@ thead th {
    2. Tables. Two columns of very unequal length in 350px. Both need the type a notch down and
       the cells tighter before either side stops wrapping badly. */
 @media (max-width: 47.99rem) {
-  header.hd .logo img { height: 88px; width: 88px; }
+  header.hd .logo img { height: 112px; width: 112px; }
+
+  /* The seven nav links wrapped onto two full-width rows under the logo. That cost about 70px
+     above the fold on every page and gave the header no clean bottom edge. Behind a button
+     they cost nothing until asked for. Everything here is scoped to .js-nav, which the script
+     adds: if it never runs, the old visible row is still what renders. */
+  header.hd.js-nav { flex-wrap: wrap; }
+  header.hd.js-nav .navtoggle { display: flex; order: 2; margin-left: auto; }
+  /* The header phone number goes on mobile. It is not lost: the sticky footer bar carries the
+     same tel link on every screen at all times, and dropping it here is what frees the corner
+     the button needs. */
+  header.hd.js-nav .tel { display: none; }
+  header.hd.js-nav nav { display: none; }
+  header.hd.js-nav.nav-open nav {
+    display: flex;
+    flex-direction: column;
+    order: 4;
+    width: 100%;
+    gap: 0;
+    margin-top: .55rem;
+    border-top: 3px solid var(--ink);
+  }
+  /* Full-width rows with a rule between them: a thumb aiming at one link cannot land on its
+     neighbour, which was the failure mode of the wrapped two-row layout. */
+  header.hd.js-nav.nav-open nav a {
+    padding: .85rem .25rem;
+    font-size: 1.05rem;
+    border-bottom: 2px solid rgba(11, 11, 11, .12);
+  }
+  header.hd.js-nav.nav-open nav a:last-child { border-bottom: 0; }
   /* At the screen-edge bleed the hard shadow would clip; drop it and keep the frame. */
   figure.diagram { box-shadow: none; }
   figure.diagram {

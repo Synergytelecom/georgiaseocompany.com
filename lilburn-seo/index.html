@@ -20,7 +20,7 @@
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"ProfessionalService","@id":"https://www.georgiaseocompany.com/#business","name":"Georgia SEO Company","url":"https://www.georgiaseocompany.com/","description":"SEO and web design for Georgia businesses","areaServed":[{"@type":"City","name":"Rome"},{"@type":"City","name":"Cartersville"},{"@type":"City","name":"Calhoun"},{"@type":"City","name":"Dalton"},{"@type":"City","name":"Cedartown"},{"@type":"City","name":"Summerville"},{"@type":"City","name":"Canton"},{"@type":"City","name":"Woodstock"},{"@type":"City","name":"Kennesaw"},{"@type":"City","name":"Acworth"},{"@type":"City","name":"Marietta"},{"@type":"City","name":"Dallas"},{"@type":"City","name":"Douglasville"},{"@type":"City","name":"Jasper"},{"@type":"City","name":"Ellijay"},{"@type":"City","name":"Blue Ridge"},{"@type":"City","name":"Ringgold"},{"@type":"City","name":"Adairsville"},{"@type":"City","name":"Rockmart"},{"@type":"City","name":"Cave Spring"}],"address":{"@type":"PostalAddress","streetAddress":"246 N 5th Ave SW","addressLocality":"Rome","addressRegion":"GA","postalCode":"30165","addressCountry":"US"},"telephone":"+17629997265"},{"@type":"WebSite","@id":"https://www.georgiaseocompany.com/#website","url":"https://www.georgiaseocompany.com/","name":"Georgia SEO Company","publisher":{"@id":"https://www.georgiaseocompany.com/#business"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.georgiaseocompany.com/"},{"@type":"ListItem","position":2,"name":"Lilburn, GA","item":"https://www.georgiaseocompany.com/lilburn-seo/"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Why is my website not showing up on Google at all in Lilburn?","acceptedAnswer":{"@type":"Answer","text":"Check indexing before anything else. A site Google has never crawled, or one blocking crawlers in its settings, can't rank no matter how good the pages are. After that the usual causes are thin pages, no local signals, and a website nobody links to, all of which are fixable and none of which are quick."}},{"@type":"Question","name":"Can I do this myself instead of hiring someone?","acceptedAnswer":{"@type":"Answer","text":"Yes, for a lot of it. Claiming the profile, setting the category, and asking customers for reviews are all free and inside your control, and every one of them is inside your control. What owners run out of isn't skill but the monthly attention, which is the part we get paid for."}},{"@type":"Question","name":"How much does SEO cost for a Lilburn business?","acceptedAnswer":{"@type":"Answer","text":"2026 rates run $300 to $10,000+ a month depending on scope, and a single-town Lilburn engagement sits well toward the bottom. The audit gives you the number and the reasoning before you decide, and it costs nothing."}}]},{"@type":"Service","name":"SEO Company in Lilburn, GA","provider":{"@id":"https://www.georgiaseocompany.com/#business"},"areaServed":{"@type":"City","name":"Lilburn"}}]}</script>
 </head><body>
 <a class="skip" href="#main">Skip to content</a>
-<header class="hd"><a class="logo" href="/" aria-label="Georgia SEO Company home"><img src="/assets/img/logo.svg" alt="Georgia SEO Company" width="128" height="128"></a><nav><a href="/seo-services/">Services</a><a href="/industries/">Industries</a><a href="/rome-seo/">Locations</a><a href="/seo-pricing/">Pricing</a><a href="/what-is-seo/">Learn</a><a href="/story/">Story</a><a href="/results/">Results</a><a href="/contact/">Contact</a></nav><a class="tel" href="tel:+17629997265">(762) 999-RANK</a></header>
+<header class="hd"><a class="logo" href="/" aria-label="Georgia SEO Company home"><img src="/assets/img/logo.svg" alt="Georgia SEO Company" width="160" height="160"></a><button class="navtoggle" type="button" aria-expanded="false" aria-controls="sitenav" aria-label="Menu"><span class="bars" aria-hidden="true"></span></button><nav id="sitenav"><a href="/seo-services/">Services</a><a href="/industries/">Industries</a><a href="/rome-seo/">Locations</a><a href="/seo-pricing/">Pricing</a><a href="/what-is-seo/">Learn</a><a href="/story/">Story</a><a href="/results/">Results</a><a href="/contact/">Contact</a></nav><a class="tel" href="tel:+17629997265">(762) 999-RANK</a></header>
 <main id="main">
 <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li aria-current="page">Lilburn, GA</li></ol></nav>
 <section class="hero"><h1>SEO Company in Lilburn, GA</h1><p class="lead">Steady monthly work on your profile and your pages, and a report each month that shows exactly what it moved.</p><a class="cta" href="/contact/">Get a free visibility audit</a><img class="mascot-hero" src="/assets/img/mascot/pose-binoculars.webp" alt="" aria-hidden="true" width="340" height="340"></section>
@@ -45,5 +45,22 @@
 <a class="sticky-tel" href="tel:+17629997265"><span aria-hidden="true">&#9742;</span> (762) 999-RANK</a>
 <a class="sticky-cta" href="/contact/">Free SEO Audit</a>
 </div>
-
+<script>
+(function () {
+  var h = document.querySelector('header.hd');
+  var b = h && h.querySelector('.navtoggle');
+  var nav = h && h.querySelector('nav');
+  if (!h || !b || !nav) return;
+  h.classList.add('js-nav');
+  function set(open) {
+    h.classList.toggle('nav-open', open);
+    b.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+  b.addEventListener('click', function () { set(!h.classList.contains('nav-open')); });
+  // Close on the way out. Same-origin navigations can keep the old DOM painted for a beat,
+  // and an open menu sitting over the incoming page reads as a rendering bug.
+  nav.addEventListener('click', function (e) { if (e.target.closest('a')) set(false); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') set(false); });
+})();
+</script>
 </body></html>

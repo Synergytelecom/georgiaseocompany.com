@@ -20,7 +20,7 @@
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"ProfessionalService","@id":"https://www.georgiaseocompany.com/#business","name":"Georgia SEO Company","url":"https://www.georgiaseocompany.com/","description":"SEO and web design for Georgia businesses","areaServed":[{"@type":"City","name":"Rome"},{"@type":"City","name":"Cartersville"},{"@type":"City","name":"Calhoun"},{"@type":"City","name":"Dalton"},{"@type":"City","name":"Cedartown"},{"@type":"City","name":"Summerville"},{"@type":"City","name":"Canton"},{"@type":"City","name":"Woodstock"},{"@type":"City","name":"Kennesaw"},{"@type":"City","name":"Acworth"},{"@type":"City","name":"Marietta"},{"@type":"City","name":"Dallas"},{"@type":"City","name":"Douglasville"},{"@type":"City","name":"Jasper"},{"@type":"City","name":"Ellijay"},{"@type":"City","name":"Blue Ridge"},{"@type":"City","name":"Ringgold"},{"@type":"City","name":"Adairsville"},{"@type":"City","name":"Rockmart"},{"@type":"City","name":"Cave Spring"}],"address":{"@type":"PostalAddress","streetAddress":"246 N 5th Ave SW","addressLocality":"Rome","addressRegion":"GA","postalCode":"30165","addressCountry":"US"},"telephone":"+17629997265"},{"@type":"WebSite","@id":"https://www.georgiaseocompany.com/#website","url":"https://www.georgiaseocompany.com/","name":"Georgia SEO Company","publisher":{"@id":"https://www.georgiaseocompany.com/#business"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Locations","item":"https://www.georgiaseocompany.com/rome-seo/"},{"@type":"ListItem","position":2,"name":"Ringgold","item":"https://www.georgiaseocompany.com/ringgold-seo/"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Should a Ringgold business try to rank across the state line?","acceptedAnswer":{"@type":"Answer","text":"It's a separate market with its own searches, its own competition and a higher price of entry. The searches where a Ringgold address actually helps you are the Catoosa County ones, and those pay back sooner, so they get worked first. A wider push becomes a real conversation once the local terms are producing."}},{"@type":"Question","name":"Have you run SEO for a business in Ringgold before?","acceptedAnswer":{"@type":"Answer","text":"So far the work has been web design, junk removal, land surveying and tree service, most of it further south in Northwest Georgia. A Ringgold account gets the same category, coverage, page and review work, and the audit shows you this market before you spend anything."}},{"@type":"Question","name":"What actually changes in the first month on a Ringgold account?","acceptedAnswer":{"@type":"Answer","text":"The profile, mostly, because it moves fastest. Category set to the exact service, coverage drawn on the towns you really reach, hours and services filled in, photos posted, and one consistent version of your name, address and phone sent out to the directories. Pages follow, and the first report lands at the end of the month with what changed on it."}}]},{"@type":"Service","name":"SEO Company in Ringgold, GA","provider":{"@id":"https://www.georgiaseocompany.com/#business"},"areaServed":{"@type":"City","name":"Ringgold"}}]}</script>
 </head><body>
 <a class="skip" href="#main">Skip to content</a>
-<header class="hd"><a class="logo" href="/" aria-label="Georgia SEO Company home"><img src="/assets/img/logo.svg" alt="Georgia SEO Company" width="128" height="128"></a><nav><a href="/seo-services/">Services</a><a href="/industries/">Industries</a><a href="/rome-seo/">Locations</a><a href="/seo-pricing/">Pricing</a><a href="/what-is-seo/">Learn</a><a href="/story/">Story</a><a href="/results/">Results</a><a href="/contact/">Contact</a></nav><a class="tel" href="tel:+17629997265">(762) 999-RANK</a></header>
+<header class="hd"><a class="logo" href="/" aria-label="Georgia SEO Company home"><img src="/assets/img/logo.svg" alt="Georgia SEO Company" width="160" height="160"></a><button class="navtoggle" type="button" aria-expanded="false" aria-controls="sitenav" aria-label="Menu"><span class="bars" aria-hidden="true"></span></button><nav id="sitenav"><a href="/seo-services/">Services</a><a href="/industries/">Industries</a><a href="/rome-seo/">Locations</a><a href="/seo-pricing/">Pricing</a><a href="/what-is-seo/">Learn</a><a href="/story/">Story</a><a href="/results/">Results</a><a href="/contact/">Contact</a></nav><a class="tel" href="tel:+17629997265">(762) 999-RANK</a></header>
 <main id="main">
 <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/rome-seo/">Locations</a></li><li aria-current="page">Ringgold</li></ol></nav>
 <section class="hero"><h1>SEO Company in Ringgold, GA</h1><p class="lead">A local search in Ringgold fills up fast with businesses working out of the larger market north of the state line. Being the Catoosa County seat is the advantage you hold, as long as the listing says so.</p><a class="cta" href="/contact/">Get a free visibility audit</a><img class="mascot-hero" src="/assets/img/mascot/pose-hands-on-hips.webp" alt="" aria-hidden="true" width="340" height="340"></section>
@@ -46,5 +46,22 @@
 <a class="sticky-tel" href="tel:+17629997265"><span aria-hidden="true">&#9742;</span> (762) 999-RANK</a>
 <a class="sticky-cta" href="/contact/">Free SEO Audit</a>
 </div>
-
+<script>
+(function () {
+  var h = document.querySelector('header.hd');
+  var b = h && h.querySelector('.navtoggle');
+  var nav = h && h.querySelector('nav');
+  if (!h || !b || !nav) return;
+  h.classList.add('js-nav');
+  function set(open) {
+    h.classList.toggle('nav-open', open);
+    b.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+  b.addEventListener('click', function () { set(!h.classList.contains('nav-open')); });
+  // Close on the way out. Same-origin navigations can keep the old DOM painted for a beat,
+  // and an open menu sitting over the incoming page reads as a rendering bug.
+  nav.addEventListener('click', function (e) { if (e.target.closest('a')) set(false); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') set(false); });
+})();
+</script>
 </body></html>
