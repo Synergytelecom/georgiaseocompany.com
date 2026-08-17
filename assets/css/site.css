@@ -1005,7 +1005,14 @@ section.art .sec-art {
   box-shadow: var(--pop);
   background: var(--bg);
   padding: 1.1rem 1.1rem 1.25rem;
+  /* A grid item defaults to min-width:auto, so the 36-column town grid stretched the card to
+     its own content width instead of scrolling inside it. The card grew past the viewport, the
+     document grew with it, and the page scrolled sideways by 2007px. min-width:0 lets the card
+     shrink so the overflow containers below can do their job. */
+  min-width: 0;
 }
+/* Belt and braces: neither scroll box may exceed its card regardless of table content. */
+.rb-gridwrap, .rb-kwwrap { max-width: 100%; }
 .rb-card h3 { margin-top: 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: .55rem; }
 .rb-metro {
   font-family: var(--font-body);
@@ -1036,6 +1043,83 @@ section.art .sec-art {
 .rb-vol { font-size: .78rem; color: #5a6a61; white-space: nowrap; }
 /* Deliberately legible. A miss is a measurement, not an embarrassment to grey out. */
 .rb-miss { color: #6b6b6b; font-style: italic; }
+
+/* --- the town-by-town grid ---------------------------------------------------------------
+   Keywords down, towns across. This is the actual evidence, so it is shown at full width and
+   scrolled rather than summarized: a reader looking for their own town needs to find it.
+   The term column is sticky so a row stays identifiable once the grid is scrolled sideways. */
+.rb-towns { font-size: .9rem; margin: 0 0 1rem; }
+.rb-gridwrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border: 2px solid var(--ink);
+  background: var(--bg);
+}
+.rb-grid { width: auto; min-width: 100%; margin: 0; border-collapse: separate; border-spacing: 0; font-size: .82rem; }
+.rb-grid th, .rb-grid td { border: 0; border-bottom: 1px solid var(--rule); padding: .3rem .25rem; }
+.rb-grid thead th {
+  position: sticky; top: 0; z-index: 2;
+  background: var(--accent);
+  border-bottom: 2px solid var(--ink);
+  vertical-align: bottom;
+  font-size: .72rem;
+  line-height: 1.15;
+  padding: .4rem .3rem;
+  min-width: 3.1rem;
+}
+.rb-town { display: block; font-weight: 700; }
+.rb-dist { display: block; font-weight: 400; font-size: .66rem; color: #5f5a4e; }
+/* Row header: the tracked term. Sticky on the horizontal axis, and opaque so scrolled cells
+   pass behind it rather than showing through. */
+.rb-grid tbody th {
+  position: sticky; left: 0; z-index: 1;
+  background: var(--wash);
+  text-align: left;
+  font-weight: 600;
+  white-space: nowrap;
+  border-right: 2px solid var(--ink);
+  min-width: 10.5rem;
+}
+.rb-grid thead th:first-child {
+  position: sticky; left: 0; z-index: 3;
+  text-align: left;
+  min-width: 10.5rem;
+}
+.rb-grid tbody th .rb-vol { display: block; font-weight: 400; }
+/* position:relative is load-bearing, not decoration. The .rb-sr labels inside these cells are
+   position:absolute, and with no positioned ancestor their containing block was the document,
+   so they sat at document x-coordinates up to 2300px and grew the page's scroll width even
+   though the cells themselves were safely inside an overflow container. Anchoring them to the
+   cell keeps them where they belong. */
+.rb-c { position: relative; text-align: center; font-variant-numeric: tabular-nums; }
+/* A held position is the loud state. 1, 2 and 3 step down in weight so a wall of them still
+   distinguishes a first from a third at a glance. */
+.rb-in { font-weight: 700; }
+.rb-p1 { background: var(--primary); color: #fff; }
+.rb-p2 { background: #f7b8c4; color: var(--ink); }
+.rb-p3 { background: #fbe0e6; color: var(--ink); }
+.rb-px { background: var(--wash); color: var(--ink); }
+/* Measured and missed. Visible, quiet, and NOT the same as unmeasured. */
+.rb-out { color: #8a8a8a; }
+/* Never measured. Hatched rather than blank so it cannot be mistaken for a zero or a miss. */
+.rb-none {
+  background: repeating-linear-gradient(45deg, transparent, transparent 3px, rgba(11, 11, 11, .07) 3px, rgba(11, 11, 11, .07) 6px);
+}
+.rb-legend { font-size: .82rem; margin: .6rem 0 0; color: #5a6a61; }
+.rb-key {
+  display: inline-block; min-width: 1.4rem; padding: .05rem .3rem;
+  text-align: center; border: 1px solid var(--ink); vertical-align: middle;
+}
+/* Screen-reader text: the grid's colors and glyphs carry meaning, so every cell also says what
+   it means in words. A dot and a hatch are not information to someone using a screen reader. */
+.rb-sr {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+/* The per-term summary is collapsed by default now that the full grid carries the detail. It is
+   a convenience read, not the proof, so it should not push the grid off the screen. */
+.rb-summary { margin-top: 1.1rem; }
+.rb-summary summary { cursor: pointer; font-weight: 600; padding: .5rem 0; }
 
 @media (max-width: 47.99rem) {
   .rb-tiles { grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr)); gap: .5rem; }
