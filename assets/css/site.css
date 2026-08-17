@@ -958,3 +958,99 @@ section.art .sec-art {
     row-gap: 1.35rem;
   }
 }
+
+/* ------------------------------------------------------------------- results board (/results/)
+   The client-performance board, rendered by tools/lib/resultsboard.mjs from committed capture
+   data. Everything is scoped under .rb-* so none of it can reach the other 183 pages.
+
+   This board is evidence, so the layout is built to keep the numbers legible rather than to
+   look impressive: counts get the display face at a size that survives a phone, and the honest
+   misses ("not top 3", "No") are styled as quieter but NOT hidden. A results page that visually
+   suppresses its gaps is the thing this page exists to be the opposite of. */
+.rb-tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(8.5rem, 1fr));
+  gap: .7rem;
+  margin: 1.25rem 0;
+}
+.rb-tile {
+  border: var(--frame);
+  box-shadow: var(--pop-panel);
+  background: var(--wash);
+  padding: .8rem .7rem;
+  text-align: center;
+}
+.rb-num {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 2.3rem;
+  line-height: 1;
+  color: var(--primary);
+  -webkit-text-stroke: 1.5px var(--ink);
+}
+.rb-lab {
+  display: block;
+  margin-top: .3rem;
+  font-size: .82rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+/* The topline sits on the paper rather than inside a panel, so it reads as a scoreboard above
+   the per-client panels instead of competing with them. */
+.rb-topline .rb-tile { background: var(--bg); }
+
+.rb-board { display: grid; gap: 1.6rem; margin-top: 1.25rem; }
+.rb-card {
+  border: var(--frame);
+  box-shadow: var(--pop);
+  background: var(--bg);
+  padding: 1.1rem 1.1rem 1.25rem;
+}
+.rb-card h3 { margin-top: 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: .55rem; }
+.rb-metro {
+  font-family: var(--font-body);
+  font-size: .85rem;
+  font-weight: 400;
+  color: #5a6a61;
+  letter-spacing: 0;
+}
+.rb-meta { font-size: .9rem; color: #5a6a61; margin: .2rem 0 0; }
+.rb-card .rb-tiles { margin: .95rem 0 1.1rem; }
+.rb-card .rb-num { font-size: 1.9rem; }
+
+/* The table scrolls inside its own box rather than pushing the page sideways. Without this the
+   three columns came to 400px against a 390px viewport, the document grew to fit, and the
+   fixed sticky CTA stretched to the wider document, so the whole page scrolled horizontally by
+   31px. Ten pixels of table became a sitewide-looking layout bug on one page. */
+.rb-kwwrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.rb-kw { width: 100%; margin: 0; }
+.rb-kw th, .rb-kw td { text-align: left; }
+/* Data cells stay on one line so a rank never breaks; HEADERS may wrap, which is what buys the
+   width back on a phone. */
+.rb-kw td:nth-child(2), .rb-kw th:nth-child(2),
+.rb-kw td:nth-child(3), .rb-kw th:nth-child(3) { text-align: center; }
+.rb-kw td:nth-child(2), .rb-kw td:nth-child(3) { white-space: nowrap; }
+.rb-kw strong { color: var(--primary); }
+/* Search volume rides alongside the term it belongs to, quieter than the term itself. Absent
+   entirely where the API returned no number, rather than printed as a zero. */
+.rb-vol { font-size: .78rem; color: #5a6a61; white-space: nowrap; }
+/* Deliberately legible. A miss is a measurement, not an embarrassment to grey out. */
+.rb-miss { color: #6b6b6b; font-style: italic; }
+
+@media (max-width: 47.99rem) {
+  .rb-tiles { grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr)); gap: .5rem; }
+  .rb-num { font-size: 1.85rem; }
+  .rb-card .rb-num { font-size: 1.55rem; }
+  .rb-kw { font-size: .85rem; }
+  .rb-kw th, .rb-kw td { padding: .45rem .35rem; }
+}
+
+/* The board needs more than the 42rem reading column: five stat tiles and a three-column table
+   are cramped on the prose measure. Widened like .related and .faq are. */
+@media (min-width: 48rem) {
+  main > section:has(.rb-board),
+  main > section:has(.rb-topline) {
+    padding-left: max(1.25rem, calc((100% - 62rem) / 2));
+    padding-right: max(1.25rem, calc((100% - 62rem) / 2));
+  }
+}
