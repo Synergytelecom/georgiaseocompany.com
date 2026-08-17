@@ -1118,8 +1118,10 @@ section.art .sec-art {
 }
 /* The per-term summary is collapsed by default now that the full grid carries the detail. It is
    a convenience read, not the proof, so it should not push the grid off the screen. */
-.rb-summary { margin-top: 1.1rem; }
-.rb-summary summary { cursor: pointer; font-weight: 600; padding: .5rem 0; }
+.rb-summary { margin-top: 1.1rem; border-top: 2px solid var(--rule); }
+.rb-summary summary { cursor: pointer; font-weight: 600; padding: .6rem 0; }
+.rb-summary summary:hover { color: var(--primary); }
+.rb-note { font-size: .88rem; color: #5a6a61; margin: .2rem 0 .9rem; }
 
 @media (max-width: 47.99rem) {
   .rb-tiles { grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr)); gap: .5rem; }
