@@ -1105,6 +1105,11 @@ section.art .sec-art {
 .rb-none {
   background: repeating-linear-gradient(45deg, transparent, transparent 3px, rgba(11, 11, 11, .07) 3px, rgba(11, 11, 11, .07) 6px);
 }
+/* Onboarding cards are starting points, not results. They read quieter than the board above so
+   a reader does not mistake a day-zero grid full of misses for a client we are failing. Same
+   frame, no hard shadow, paper-toned rather than white. */
+.rb-onboard { box-shadow: var(--pop-panel); background: var(--wash); }
+.rb-onboard .rb-tile { background: var(--bg); }
 .rb-legend { font-size: .82rem; margin: .6rem 0 0; color: #5a6a61; }
 .rb-key {
   display: inline-block; min-width: 1.4rem; padding: .05rem .3rem;
