@@ -1145,3 +1145,7 @@ section.art .sec-art {
     padding-right: max(1.25rem, calc((100% - 62rem) / 2));
   }
 }
+
+/* Before/after summary on board cards. The one line a comparing prospect actually wants. */
+.rb-card .rb-since { font-size: .92rem; margin: .3rem 0 .6rem; }
+.rb-card .rb-since-note { color: #5a6a61; font-style: italic; }
