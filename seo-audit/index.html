@@ -67,20 +67,16 @@
   </div>
   <div class="lf-row">
     <label for="audit-request-phone">Phone <span class="req" aria-hidden="true">*</span></label>
-    <input id="audit-request-phone" name="phone" type="tel" autocomplete="tel" required>
+    <input id="audit-request-phone" name="phone" type="tel" autocomplete="tel" inputmode="numeric" pattern="[0-9()+-. ]*" required>
   </div>
   <div class="lf-row">
-    <label for="audit-request-email">Email</label>
-    <input id="audit-request-email" name="email" type="email" autocomplete="email">
+    <label for="audit-request-email">Email <span class="req" aria-hidden="true">*</span></label>
+    <input id="audit-request-email" name="email" type="email" autocomplete="email" required>
   </div>
   <div class="lf-row">
     <label for="audit-request-website">Your website</label>
     <input id="audit-request-website" name="website" type="text" inputmode="url" placeholder="yourbusiness.com">
     <span class="lf-hint">If you do not have one yet, leave this blank and say so below.</span>
-  </div>
-  <div class="lf-row">
-    <label for="audit-request-town">Town you want customers from</label>
-    <input id="audit-request-town" name="town" type="text" autocomplete="address-level2">
   </div>
   <div class="lf-row">
     <label for="audit-request-notes">What is going on</label>
@@ -148,6 +144,14 @@
 </script><script>
 (function () {
   var PHONE = '(762) 999-RANK';
+  // Phone accepts digits and phone punctuation only. Letters never appear, even mid-string
+  // paste: anything else is stripped the moment it lands in the field.
+  document.querySelectorAll('form.leadform-form [name=phone]').forEach(function (input) {
+    input.addEventListener('input', function () {
+      var clean = input.value.replace(/[^0-9()+-. ]/g, '');
+      if (clean !== input.value) input.value = clean;
+    });
+  });
   document.querySelectorAll('form.leadform-form').forEach(function (form) {
     var status = form.querySelector('.lf-status');
     var button = form.querySelector('button[type=submit]');
@@ -155,10 +159,11 @@
       e.preventDefault();
       var name = form.querySelector('[name=name]');
       var phone = form.querySelector('[name=phone]');
-      if (!name.value.trim() || !phone.value.trim()) {
+      var email = form.querySelector('[name=email]');
+      if (!name.value.trim() || !phone.value.trim() || !email.value.trim()) {
         status.className = 'lf-status is-bad';
-        status.textContent = 'Please add your name and a phone number so we can reach you.';
-        (name.value.trim() ? phone : name).focus();
+        status.textContent = 'Please add your name, a phone number, and an email so we can reach you.';
+        (!name.value.trim() ? name : !phone.value.trim() ? phone : email).focus();
         return;
       }
       var data = {};
