@@ -1105,6 +1105,20 @@ section.art .sec-art {
 .rb-none {
   background: repeating-linear-gradient(45deg, transparent, transparent 3px, rgba(11, 11, 11, .07) 3px, rgba(11, 11, 11, .07) 6px);
 }
+/* Client proof on an industry page. Framed like a panel so it reads as evidence dropped into
+   the sales page rather than more of the page's own argument. Sits on the wash so it separates
+   from the white sections around it without competing with the closing CTA. */
+main > section.rb-proof {
+  border: var(--frame);
+  box-shadow: var(--pop-panel);
+  background: var(--wash);
+  padding: 1.4rem 1.25rem 1.5rem;
+  margin-bottom: 1.1rem;
+}
+main > section.rb-proof .rb-tiles { margin: 1rem 0 1.1rem; }
+main > section.rb-proof .rb-tile { background: var(--bg); }
+main > section.rb-proof .rb-num { font-size: 2rem; }
+
 /* Onboarding cards are starting points, not results. They read quieter than the board above so
    a reader does not mistake a day-zero grid full of misses for a client we are failing. Same
    frame, no hard shadow, paper-toned rather than white. */
