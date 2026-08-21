@@ -1163,3 +1163,21 @@ main > section.rb-proof .rb-num { font-size: 2rem; }
 /* Before/after summary on board cards. The one line a comparing prospect actually wants. */
 .rb-card .rb-since { font-size: .92rem; margin: .3rem 0 .6rem; }
 .rb-card .rb-since-note { color: #5a6a61; font-style: italic; }
+
+/* Hub index lists (/locations/, /industries/). Added 2026-08-21 with the generated hubs.
+   These carry 108 and 70 links respectively, so a single column runs the page to 8000px
+   and wastes the whole right half of a desktop viewport. Columns keep the scan short.
+   column-count is used rather than grid because the lists are variable-length and the
+   browser balancing them beats any fixed row count we could pick. */
+.hublist {
+  column-width: 13rem;
+  column-gap: 1.75rem;
+  margin: .35rem 0 1.4rem;
+  padding-left: 1.1rem;
+}
+.hublist li {
+  break-inside: avoid;
+  margin: 0 0 .3rem;
+  line-height: 1.45;
+}
+main h3 + .hublist { margin-top: .5rem; }
