@@ -1086,12 +1086,19 @@ section.art .sec-art {
   min-width: 10.5rem;
 }
 .rb-grid tbody th .rb-vol { display: block; font-weight: 400; }
-/* position:relative is load-bearing, not decoration. The .rb-sr labels inside these cells are
-   position:absolute, and with no positioned ancestor their containing block was the document,
-   so they sat at document x-coordinates up to 2300px and grew the page's scroll width even
-   though the cells themselves were safely inside an overflow container. Anchoring them to the
-   cell keeps them where they belong. */
-.rb-c { position: relative; text-align: center; font-variant-numeric: tabular-nums; }
+/* Cells carry their spoken description in aria-label rather than a child <span>, so they hold
+   no children at all now. Two consequences worth knowing:
+   1. position:relative is gone. It existed only to anchor the absolutely-positioned .rb-sr
+      spans, which previously escaped to the document as their containing block and grew the
+      page's scroll width to 2300px. No child, no problem, and 6,920 needless stacking
+      contexts go with it.
+   2. An unmeasured cell is now genuinely empty, so it needs its own height. The &nbsp; used
+      to supply that. min-height does it without a DOM node. */
+.rb-c {
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  min-height: 1.5rem;
+}
 /* A held position is the loud state. 1, 2 and 3 step down in weight so a wall of them still
    distinguishes a first from a third at a glance. */
 .rb-in { font-weight: 700; }
