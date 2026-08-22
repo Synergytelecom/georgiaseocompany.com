@@ -96,6 +96,71 @@
 </script><script>
 (function () {
   var PHONE = '(762) 999-RANK';
+
+  // ATTRIBUTION. Added 2026-08-21 because leads reached GHL with no way to tell paid from
+  // organic: the form sent five fields and nothing else, so every contact looked identical
+  // whatever brought it in.
+  //
+  // FIRST TOUCH WINS, and it is stored per session. Somebody lands on a city page from an ad,
+  // reads for a while, then submits from /contact/. By then location.search is empty and
+  // document.referrer is our own site, so reading either at submit time would file that ad
+  // lead as Direct. Stashing the landing values on arrival is the only way the ad still gets
+  // credit three clicks later.
+  var ATTR_KEY = 'gsc_attr';
+  function readAttr() {
+    try {
+      var saved = sessionStorage.getItem(ATTR_KEY);
+      if (saved) return JSON.parse(saved);
+    } catch (e) { /* private mode, fall through and just use this pageview */ }
+    var q = new URLSearchParams(location.search);
+    var a = {
+      utm_source: q.get('utm_source') || '',
+      utm_medium: q.get('utm_medium') || '',
+      utm_campaign: q.get('utm_campaign') || '',
+      utm_term: q.get('utm_term') || '',
+      utm_content: q.get('utm_content') || '',
+      gclid: q.get('gclid') || '',
+      fbclid: q.get('fbclid') || '',
+      msclkid: q.get('msclkid') || '',
+      referrer: document.referrer || '',
+      landing: location.pathname
+    };
+    try { sessionStorage.setItem(ATTR_KEY, JSON.stringify(a)); } catch (e) {}
+    return a;
+  }
+
+  // One readable label, because this lands in GHL's Source field where Eric reads it. The
+  // click ids are checked BEFORE utm_medium: an ad platform sets gclid itself and a mistagged
+  // or untagged campaign would otherwise read as organic, which is the exact error this is
+  // meant to prevent. Paid is the claim that has to be hard to lose.
+  var SEARCH_HOSTS = /(^|\.)(google|bing|duckduckgo|yahoo|ecosia|brave)\./i;
+  function channelOf(a) {
+    if (a.gclid) return 'Google Ads (paid)';
+    if (a.msclkid) return 'Microsoft Ads (paid)';
+    if (a.fbclid) return 'Meta (paid)';
+    var med = (a.utm_medium || '').toLowerCase();
+    if (/^(cpc|ppc|paid|paidsearch|paid_search|paid-social|display|retargeting)$/.test(med)) {
+      return (a.utm_source || 'Unknown source') + ' (paid)';
+    }
+    if (a.utm_source) return a.utm_source + (med ? ' / ' + med : '');
+    if (a.referrer) {
+      var host = '';
+      try { host = new URL(a.referrer).hostname; } catch (e) {}
+      if (host && host.indexOf(location.hostname) === -1) {
+        return SEARCH_HOSTS.test(host) ? 'Organic search' : 'Referral: ' + host;
+      }
+    }
+    return 'Direct';
+  }
+  // Coarse bucket for a GHL tag, so a smart list can filter on it in one click.
+  function bucketOf(label) {
+    if (/\(paid\)/.test(label)) return 'paid';
+    if (label === 'Organic search') return 'organic';
+    if (label.indexOf('Referral:') === 0) return 'referral';
+    if (label === 'Direct') return 'direct';
+    return 'other';
+  }
+  var ATTR = readAttr();
   // Phone accepts digits and phone punctuation only. Letters never appear, even mid-string
   // paste: anything else is stripped the moment it lands in the field.
   document.querySelectorAll('form.leadform-form [name=phone]').forEach(function (input) {
@@ -120,6 +185,14 @@
       }
       var data = {};
       new FormData(form).forEach(function (v, k) { data[k] = v; });
+      // Attribution rides along with every submission. source is what GHL shows in its
+      // Source column, channel becomes a tag, and the rest is kept verbatim so a campaign
+      // can be traced later without re-deriving it from a label.
+      var label = channelOf(ATTR);
+      data.source = label;
+      data.channel = bucketOf(label);
+      data.page = location.pathname;
+      data.attribution = ATTR;
       button.disabled = true;
       var original = button.textContent;
       button.textContent = 'Sending...';
