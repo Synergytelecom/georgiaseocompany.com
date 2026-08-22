@@ -177,33 +177,55 @@
     return a;
   }
 
-  // One readable label, because this lands in GHL's Source field where Eric reads it. The
-  // click ids are checked BEFORE utm_medium: an ad platform sets gclid itself and a mistagged
-  // or untagged campaign would otherwise read as organic, which is the exact error this is
-  // meant to prevent. Paid is the claim that has to be hard to lose.
+  // NOT ALL CLICK IDS MEAN PAID, and treating them alike was a real bug here until
+  // 2026-08-21. gclid and msclkid are set by Google Ads and Microsoft Ads, so their presence
+  // IS proof of a paid click. fbclid is not: Facebook appends it to outbound links from
+  // ORGANIC posts as well as ads. Reading fbclid as paid tagged free traffic as ad traffic,
+  // which inflates paid volume and corrupts any cost-per-lead figure built on it.
+  //
+  // So paid social is only claimed when the campaign was TAGGED as paid. That means Meta ads
+  // must carry utm_medium=paid-social in the ad-level URL parameters field, or their leads
+  // land here as organic social. Under-claiming paid is the safe direction to fail.
   var SEARCH_HOSTS = /(^|\.)(google|bing|duckduckgo|yahoo|ecosia|brave)\./i;
+  var SOCIAL_HOSTS = /(^|\.)(facebook|instagram|linkedin|twitter|x|t|tiktok|youtube|pinterest|reddit|nextdoor|threads)\./i;
+  var PAID_SEARCH = /^(cpc|ppc|paid|paidsearch|paid_search|ppc_search)$/;
+  var PAID_SOCIAL = /^(paid-social|paid_social|paidsocial|social-paid|social_cpc|display|retargeting|remarketing)$/;
   function channelOf(a) {
-    if (a.gclid) return 'Google Ads (paid)';
-    if (a.msclkid) return 'Microsoft Ads (paid)';
-    if (a.fbclid) return 'Meta (paid)';
     var med = (a.utm_medium || '').toLowerCase();
-    if (/^(cpc|ppc|paid|paidsearch|paid_search|paid-social|display|retargeting)$/.test(med)) {
-      return (a.utm_source || 'Unknown source') + ' (paid)';
+    var src = (a.utm_source || '').toLowerCase();
+    // Definitive paid-search click ids first.
+    if (a.gclid) return 'Google Ads (paid search)';
+    if (a.msclkid) return 'Microsoft Ads (paid search)';
+    // Then explicit tagging, which is the only honest evidence of paid social.
+    if (PAID_SOCIAL.test(med) || (PAID_SEARCH.test(med) && SOCIAL_HOSTS.test(src + '.'))) {
+      return (a.utm_source || 'Unknown') + ' (paid social)';
+    }
+    if (PAID_SEARCH.test(med)) return (a.utm_source || 'Unknown') + ' (paid search)';
+    if (med === 'social' || med === 'organic-social' || SOCIAL_HOSTS.test(src + '.')) {
+      return (a.utm_source || 'Social') + ' (organic social)';
     }
     if (a.utm_source) return a.utm_source + (med ? ' / ' + med : '');
+    // fbclid with no paid tagging: a Meta link click that could be either. Called organic
+    // because claiming paid without evidence is the error that costs money.
+    if (a.fbclid) return 'Meta (organic social)';
     if (a.referrer) {
       var host = '';
       try { host = new URL(a.referrer).hostname; } catch (e) {}
       if (host && host.indexOf(location.hostname) === -1) {
-        return SEARCH_HOSTS.test(host) ? 'Organic search' : 'Referral: ' + host;
+        if (SEARCH_HOSTS.test(host)) return 'Organic search';
+        if (SOCIAL_HOSTS.test(host)) return host.replace(/^www\./, '') + ' (organic social)';
+        return 'Referral: ' + host;
       }
     }
     return 'Direct';
   }
-  // Coarse bucket for a GHL tag, so a smart list can filter on it in one click.
+  // Coarse bucket for a GHL tag, so a smart list filters in one click. Six buckets, because
+  // paid and organic SOCIAL are different spends and lumping them loses the answer.
   function bucketOf(label) {
-    if (/\(paid\)/.test(label)) return 'paid';
-    if (label === 'Organic search') return 'organic';
+    if (/\(paid social\)/.test(label)) return 'paid-social';
+    if (/\(paid search\)/.test(label)) return 'paid-search';
+    if (/\(organic social\)/.test(label)) return 'organic-social';
+    if (label === 'Organic search') return 'organic-search';
     if (label.indexOf('Referral:') === 0) return 'referral';
     if (label === 'Direct') return 'direct';
     return 'other';
