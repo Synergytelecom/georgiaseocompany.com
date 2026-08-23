@@ -19,7 +19,7 @@
 <meta property="og:image:alt" content="Georgia SEO Company, (762) 999-RANK">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="/assets/css/site.css">
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-HW5XF9N3C4"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-HW5XF9N3C4');document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="tel:"]');if(a)gtag('event','phone_click',{link_url:a.getAttribute('href'),page_path:location.pathname})})</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HW5XF9N3C4"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-HW5XF9N3C4');document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="tel:"]');if(a)gtag('event','phone_click',{link_url:a.getAttribute('href'),page_path:location.pathname,link_location:a.closest('.stickycta')?'sticky bar':a.closest('header')?'header':'page body'})})</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"ProfessionalService","@id":"https://www.georgiaseocompany.com/#business","name":"Georgia SEO Company","url":"https://www.georgiaseocompany.com/","description":"SEO and web design for Georgia businesses","areaServed":[{"@type":"City","name":"Rome"},{"@type":"City","name":"Cartersville"},{"@type":"City","name":"Calhoun"},{"@type":"City","name":"Dalton"},{"@type":"City","name":"Cedartown"},{"@type":"City","name":"Summerville"},{"@type":"City","name":"Canton"},{"@type":"City","name":"Woodstock"},{"@type":"City","name":"Kennesaw"},{"@type":"City","name":"Acworth"},{"@type":"City","name":"Marietta"},{"@type":"City","name":"Dallas"},{"@type":"City","name":"Douglasville"},{"@type":"City","name":"Jasper"},{"@type":"City","name":"Ellijay"},{"@type":"City","name":"Blue Ridge"},{"@type":"City","name":"Ringgold"},{"@type":"City","name":"Adairsville"},{"@type":"City","name":"Rockmart"},{"@type":"City","name":"Cave Spring"}],"address":{"@type":"PostalAddress","streetAddress":"246 N 5th Ave SW","addressLocality":"Rome","addressRegion":"GA","postalCode":"30165","addressCountry":"US"},"telephone":"+17629997265","image":"https://www.georgiaseocompany.com/assets/img/social-card.png","logo":"https://www.georgiaseocompany.com/assets/img/social-card.png","openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday"],"opens":"14:00","closes":"18:00"},{"@type":"OpeningHoursSpecification","dayOfWeek":["Thursday","Friday"],"opens":"07:00","closes":"18:00"}],"founder":{"@id":"https://www.georgiaseocompany.com/#eric-kirby"}},{"@type":"WebSite","@id":"https://www.georgiaseocompany.com/#website","url":"https://www.georgiaseocompany.com/","name":"Georgia SEO Company","publisher":{"@id":"https://www.georgiaseocompany.com/#business"}},{"@type":"Person","@id":"https://www.georgiaseocompany.com/#eric-kirby","name":"Eric Kirby","jobTitle":"Owner","description":"Runs Georgia SEO Company from Rome, Georgia after more than a decade in technology sales, service and support.","url":"https://www.georgiaseocompany.com/about/","worksFor":{"@id":"https://www.georgiaseocompany.com/#business"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Services","item":"https://www.georgiaseocompany.com/seo-services/"},{"@type":"ListItem","position":2,"name":"AI Search Visibility","item":"https://www.georgiaseocompany.com/ai-search-visibility/"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is AI search visibility a different service from SEO?","acceptedAnswer":{"@type":"Answer","text":"Mostly it is the same work aimed at a different surface. Clear pages, accurate structured data, consistent business information, and steady reviews are what both search results and AI answers draw on. The new parts are checking which businesses get named and writing pages that answer a question directly."}},{"@type":"Question","name":"Can you tell whether ChatGPT recommends my business?","acceptedAnswer":{"@type":"Answer","text":"We can ask it, and the other assistants, using the questions your customers ask, then record which businesses come back named. There is no position report for that the way Search Console reports positions, and answers vary between sessions, so treat it as a sample rather than a rank."}},{"@type":"Question","name":"Do AI Overviews take clicks away from my website?","acceptedAnswer":{"@type":"Answer","text":"On informational searches, often yes, because the answer arrives without a click. Searches with intent to hire behave differently, since somebody choosing a business still wants a phone number, hours, and reviews. Being named in the answer is the goal on both kinds."}},{"@type":"Question","name":"Does adding structured data make an AI answer cite us?","acceptedAnswer":{"@type":"Answer","text":"It helps a machine read the page correctly, which is a prerequisite and not a switch. Markup that describes a page accurately supports citation. Markup describing services you do not actually offer creates a different problem."}},{"@type":"Question","name":"Should pages be written for AI or for people?","acceptedAnswer":{"@type":"Answer","text":"For people, in a structure a machine can parse. Every technique that helps here also helps a reader: answer the question early, keep the sentences plain, and keep your facts consistent with the rest of your listings."}}]},{"@type":"Service","name":"AI Search Visibility","provider":{"@id":"https://www.georgiaseocompany.com/#business"},"areaServed":{"@type":"State","name":"Georgia"}}]}</script>
 </head><body>
 <a class="skip" href="#main">Skip to content</a>
@@ -66,23 +66,13 @@
 </div>
 <script>
 (function () {
-  // PHONE CLICKS, counted. The number sits in the header and the sticky bar on all 257
-  // pages, and for a local service business the phone very likely converts better than the
-  // form. Until now every one of those calls was invisible in GA4, so a page that produced
-  // nothing but calls looked identical to a page that produced nothing at all.
-  //
-  // Delegated on document so it covers the header link, the sticky bar, and any tel: link
-  // inside page copy without each needing its own binding. Mark phone_call_click as a key
-  // event in GA4 alongside generate_lead.
-  document.addEventListener('click', function (e) {
-    var a = e.target.closest && e.target.closest('a[href^="tel:"]');
-    if (!a || typeof gtag !== 'function') return;
-    gtag('event', 'phone_call_click', {
-      page_path: location.pathname,
-      link_location: a.closest('.stickycta') ? 'sticky bar'
-        : a.closest('header') ? 'header' : 'page body'
-    });
-  });
+  // NO phone-click listener here. One already lives in the GA4 config block below, firing
+  // the phone_click event, an established key event in the property with history behind it.
+  // A second listener was added here on 2026-08-21 under the name phone_call_click and
+  // removed the same day: it would have fired on the same clicks, split one metric across
+  // two event names, and diluted the key event that already worked. The useful part of it,
+  // recording WHICH of the three tel: links was tapped, was merged into the existing call
+  // instead. Do not add a second listener; extend the one in the config block.
   var h = document.querySelector('header.hd');
   var b = h && h.querySelector('.navtoggle');
   var nav = h && h.querySelector('nav');

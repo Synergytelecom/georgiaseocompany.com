@@ -19,7 +19,7 @@
 <meta property="og:image:alt" content="Georgia SEO Company, (762) 999-RANK">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="/assets/css/site.css">
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-HW5XF9N3C4"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-HW5XF9N3C4');document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="tel:"]');if(a)gtag('event','phone_click',{link_url:a.getAttribute('href'),page_path:location.pathname})})</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HW5XF9N3C4"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-HW5XF9N3C4');document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="tel:"]');if(a)gtag('event','phone_click',{link_url:a.getAttribute('href'),page_path:location.pathname,link_location:a.closest('.stickycta')?'sticky bar':a.closest('header')?'header':'page body'})})</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"ProfessionalService","@id":"https://www.georgiaseocompany.com/#business","name":"Georgia SEO Company","url":"https://www.georgiaseocompany.com/","description":"SEO and web design for Georgia businesses","areaServed":[{"@type":"City","name":"Rome"},{"@type":"City","name":"Cartersville"},{"@type":"City","name":"Calhoun"},{"@type":"City","name":"Dalton"},{"@type":"City","name":"Cedartown"},{"@type":"City","name":"Summerville"},{"@type":"City","name":"Canton"},{"@type":"City","name":"Woodstock"},{"@type":"City","name":"Kennesaw"},{"@type":"City","name":"Acworth"},{"@type":"City","name":"Marietta"},{"@type":"City","name":"Dallas"},{"@type":"City","name":"Douglasville"},{"@type":"City","name":"Jasper"},{"@type":"City","name":"Ellijay"},{"@type":"City","name":"Blue Ridge"},{"@type":"City","name":"Ringgold"},{"@type":"City","name":"Adairsville"},{"@type":"City","name":"Rockmart"},{"@type":"City","name":"Cave Spring"}],"address":{"@type":"PostalAddress","streetAddress":"246 N 5th Ave SW","addressLocality":"Rome","addressRegion":"GA","postalCode":"30165","addressCountry":"US"},"telephone":"+17629997265","image":"https://www.georgiaseocompany.com/assets/img/social-card.png","logo":"https://www.georgiaseocompany.com/assets/img/social-card.png","openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday"],"opens":"14:00","closes":"18:00"},{"@type":"OpeningHoursSpecification","dayOfWeek":["Thursday","Friday"],"opens":"07:00","closes":"18:00"}],"founder":{"@id":"https://www.georgiaseocompany.com/#eric-kirby"}},{"@type":"WebSite","@id":"https://www.georgiaseocompany.com/#website","url":"https://www.georgiaseocompany.com/","name":"Georgia SEO Company","publisher":{"@id":"https://www.georgiaseocompany.com/#business"}},{"@type":"Person","@id":"https://www.georgiaseocompany.com/#eric-kirby","name":"Eric Kirby","jobTitle":"Owner","description":"Runs Georgia SEO Company from Rome, Georgia after more than a decade in technology sales, service and support.","url":"https://www.georgiaseocompany.com/about/","worksFor":{"@id":"https://www.georgiaseocompany.com/#business"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Blog","item":"https://www.georgiaseocompany.com/blog/"},{"@type":"ListItem","position":2,"name":"How Your Google Business Profile Drives Local SEO","item":"https://www.georgiaseocompany.com/blog/how-your-google-business-profile-drives-local-seo/"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Does my website change whether my listing shows in the map?","acceptedAnswer":{"@type":"Answer","text":"Barely, and mostly through one narrow crossing. Google compares what the listing claims against what the site confirms, so a page selling the same service the listing names supports it. Design, page speed, and headings move ranked results and leave a map position roughly where it was."}},{"@type":"Question","name":"Can a business hold a map card with no website at all?","acceptedAnswer":{"@type":"Answer","text":"Yes. A complete, verified listing is eligible on its own, and plenty of businesses take a seat that way. What the missing site costs is the searches with no town attached, plus somewhere for an interested searcher to land after tapping through."}},{"@type":"Question","name":"Which half should a small Georgia business work on first?","acceptedAnswer":{"@type":"Answer","text":"The listing, almost always. It costs nothing, it answers in weeks rather than quarters, and the searches it wins carry people who have already decided to hire somebody. The website is the second move, and it's the one that lifts the ceiling a listing runs into."}},{"@type":"Question","name":"Why does my business appear in one town and vanish in the next?","acceptedAnswer":{"@type":"Answer","text":"Distance. Google redraws the three map cards from the spot the searcher is standing in, so a listing strong at home can disappear twenty minutes away. Service areas drawn where the crew really goes, a page written for each of those towns, and matching records on other sites are what stretch the reach."}},{"@type":"Question","name":"If reviews matter that much, do they help my website rank too?","acceptedAnswer":{"@type":"Answer","text":"Very little directly. Reviews are a map band signal, and whatever they do to the ranked list arrives indirectly, through people choosing your result and staying on it. Treat the review habit as listing work and treat pages as website work."}}]}]}</script>
 </head><body>
 <a class="skip" href="#main">Skip to content</a>
@@ -78,23 +78,13 @@
 </div>
 <script>
 (function () {
-  // PHONE CLICKS, counted. The number sits in the header and the sticky bar on all 257
-  // pages, and for a local service business the phone very likely converts better than the
-  // form. Until now every one of those calls was invisible in GA4, so a page that produced
-  // nothing but calls looked identical to a page that produced nothing at all.
-  //
-  // Delegated on document so it covers the header link, the sticky bar, and any tel: link
-  // inside page copy without each needing its own binding. Mark phone_call_click as a key
-  // event in GA4 alongside generate_lead.
-  document.addEventListener('click', function (e) {
-    var a = e.target.closest && e.target.closest('a[href^="tel:"]');
-    if (!a || typeof gtag !== 'function') return;
-    gtag('event', 'phone_call_click', {
-      page_path: location.pathname,
-      link_location: a.closest('.stickycta') ? 'sticky bar'
-        : a.closest('header') ? 'header' : 'page body'
-    });
-  });
+  // NO phone-click listener here. One already lives in the GA4 config block below, firing
+  // the phone_click event, an established key event in the property with history behind it.
+  // A second listener was added here on 2026-08-21 under the name phone_call_click and
+  // removed the same day: it would have fired on the same clicks, split one metric across
+  // two event names, and diluted the key event that already worked. The useful part of it,
+  // recording WHICH of the three tel: links was tapped, was merged into the existing call
+  // instead. Do not add a second listener; extend the one in the config block.
   var h = document.querySelector('header.hd');
   var b = h && h.querySelector('.navtoggle');
   var nav = h && h.querySelector('nav');

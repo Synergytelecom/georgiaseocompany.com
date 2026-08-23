@@ -19,7 +19,7 @@
 <meta property="og:image:alt" content="Georgia SEO Company, (762) 999-RANK">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="/assets/css/site.css">
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-HW5XF9N3C4"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-HW5XF9N3C4');document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="tel:"]');if(a)gtag('event','phone_click',{link_url:a.getAttribute('href'),page_path:location.pathname})})</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HW5XF9N3C4"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-HW5XF9N3C4');document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="tel:"]');if(a)gtag('event','phone_click',{link_url:a.getAttribute('href'),page_path:location.pathname,link_location:a.closest('.stickycta')?'sticky bar':a.closest('header')?'header':'page body'})})</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"ProfessionalService","@id":"https://www.georgiaseocompany.com/#business","name":"Georgia SEO Company","url":"https://www.georgiaseocompany.com/","description":"SEO and web design for Georgia businesses","areaServed":[{"@type":"City","name":"Rome"},{"@type":"City","name":"Cartersville"},{"@type":"City","name":"Calhoun"},{"@type":"City","name":"Dalton"},{"@type":"City","name":"Cedartown"},{"@type":"City","name":"Summerville"},{"@type":"City","name":"Canton"},{"@type":"City","name":"Woodstock"},{"@type":"City","name":"Kennesaw"},{"@type":"City","name":"Acworth"},{"@type":"City","name":"Marietta"},{"@type":"City","name":"Dallas"},{"@type":"City","name":"Douglasville"},{"@type":"City","name":"Jasper"},{"@type":"City","name":"Ellijay"},{"@type":"City","name":"Blue Ridge"},{"@type":"City","name":"Ringgold"},{"@type":"City","name":"Adairsville"},{"@type":"City","name":"Rockmart"},{"@type":"City","name":"Cave Spring"}],"address":{"@type":"PostalAddress","streetAddress":"246 N 5th Ave SW","addressLocality":"Rome","addressRegion":"GA","postalCode":"30165","addressCountry":"US"},"telephone":"+17629997265","image":"https://www.georgiaseocompany.com/assets/img/social-card.png","logo":"https://www.georgiaseocompany.com/assets/img/social-card.png","openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday"],"opens":"14:00","closes":"18:00"},{"@type":"OpeningHoursSpecification","dayOfWeek":["Thursday","Friday"],"opens":"07:00","closes":"18:00"}],"founder":{"@id":"https://www.georgiaseocompany.com/#eric-kirby"}},{"@type":"WebSite","@id":"https://www.georgiaseocompany.com/#website","url":"https://www.georgiaseocompany.com/","name":"Georgia SEO Company","publisher":{"@id":"https://www.georgiaseocompany.com/#business"}},{"@type":"Person","@id":"https://www.georgiaseocompany.com/#eric-kirby","name":"Eric Kirby","jobTitle":"Owner","description":"Runs Georgia SEO Company from Rome, Georgia after more than a decade in technology sales, service and support.","url":"https://www.georgiaseocompany.com/about/","worksFor":{"@id":"https://www.georgiaseocompany.com/#business"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Services","item":"https://www.georgiaseocompany.com/seo-services/"},{"@type":"ListItem","position":2,"name":"On Page SEO","item":"https://www.georgiaseocompany.com/on-page-seo/"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is the difference between on page SEO and technical SEO?","acceptedAnswer":{"@type":"Answer","text":"On page SEO is what a reader can see: titles, headings, copy, the links between pages. Technical SEO is the machinery under it: crawling, indexing, speed, redirects, structured data. A page needs the technical side to be reachable and the on page side to be relevant, and most stalled sites need some of each."}},{"@type":"Question","name":"How long before on page changes show up in rankings?","acceptedAnswer":{"@type":"Answer","text":"Title and heading changes often show movement within a few weeks, since Google recrawls a page that changed. Deeper rewrites and internal link changes take longer to settle. This is the fastest moving part of SEO work, which is why it usually goes first once the pages exist."}},{"@type":"Question","name":"Can I do on page SEO myself?","acceptedAnswer":{"@type":"Answer","text":"Much of it, yes. Google Search Console shows which searches already bring people to each page, and an owner who reads those rows can improve their own titles. What tends to get missed is keyword mapping across a whole site and spotting two pages competing for one phrase."}},{"@type":"Question","name":"Does keyword density matter?","acceptedAnswer":{"@type":"Answer","text":"No. Repeating a phrase to hit a percentage reads badly to a person and buys nothing with a search engine. What matters is whether the page covers what somebody searching that phrase came to find, and whether the title and the headings say so plainly."}},{"@type":"Question","name":"How many keywords should one page target?","acceptedAnswer":{"@type":"Answer","text":"One primary search, plus the close variants that mean the same thing. Word order and plural twins are the same term to a search engine, so splitting them across separate pages just puts two of your own pages in competition. Two phrases that mean genuinely different things need two pages."}}]},{"@type":"Service","name":"On Page SEO","provider":{"@id":"https://www.georgiaseocompany.com/#business"},"areaServed":{"@type":"State","name":"Georgia"}}]}</script>
 </head><body>
 <a class="skip" href="#main">Skip to content</a>
@@ -64,23 +64,13 @@
 </div>
 <script>
 (function () {
-  // PHONE CLICKS, counted. The number sits in the header and the sticky bar on all 257
-  // pages, and for a local service business the phone very likely converts better than the
-  // form. Until now every one of those calls was invisible in GA4, so a page that produced
-  // nothing but calls looked identical to a page that produced nothing at all.
-  //
-  // Delegated on document so it covers the header link, the sticky bar, and any tel: link
-  // inside page copy without each needing its own binding. Mark phone_call_click as a key
-  // event in GA4 alongside generate_lead.
-  document.addEventListener('click', function (e) {
-    var a = e.target.closest && e.target.closest('a[href^="tel:"]');
-    if (!a || typeof gtag !== 'function') return;
-    gtag('event', 'phone_call_click', {
-      page_path: location.pathname,
-      link_location: a.closest('.stickycta') ? 'sticky bar'
-        : a.closest('header') ? 'header' : 'page body'
-    });
-  });
+  // NO phone-click listener here. One already lives in the GA4 config block below, firing
+  // the phone_click event, an established key event in the property with history behind it.
+  // A second listener was added here on 2026-08-21 under the name phone_call_click and
+  // removed the same day: it would have fired on the same clicks, split one metric across
+  // two event names, and diluted the key event that already worked. The useful part of it,
+  // recording WHICH of the three tel: links was tapped, was merged into the existing call
+  // instead. Do not add a second listener; extend the one in the config block.
   var h = document.querySelector('header.hd');
   var b = h && h.querySelector('.navtoggle');
   var nav = h && h.querySelector('nav');

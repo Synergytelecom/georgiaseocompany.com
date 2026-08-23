@@ -19,7 +19,7 @@
 <meta property="og:image:alt" content="Georgia SEO Company, (762) 999-RANK">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="/assets/css/site.css">
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-HW5XF9N3C4"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-HW5XF9N3C4');document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="tel:"]');if(a)gtag('event','phone_click',{link_url:a.getAttribute('href'),page_path:location.pathname})})</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HW5XF9N3C4"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-HW5XF9N3C4');document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="tel:"]');if(a)gtag('event','phone_click',{link_url:a.getAttribute('href'),page_path:location.pathname,link_location:a.closest('.stickycta')?'sticky bar':a.closest('header')?'header':'page body'})})</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"ProfessionalService","@id":"https://www.georgiaseocompany.com/#business","name":"Georgia SEO Company","url":"https://www.georgiaseocompany.com/","description":"SEO and web design for Georgia businesses","areaServed":[{"@type":"City","name":"Rome"},{"@type":"City","name":"Cartersville"},{"@type":"City","name":"Calhoun"},{"@type":"City","name":"Dalton"},{"@type":"City","name":"Cedartown"},{"@type":"City","name":"Summerville"},{"@type":"City","name":"Canton"},{"@type":"City","name":"Woodstock"},{"@type":"City","name":"Kennesaw"},{"@type":"City","name":"Acworth"},{"@type":"City","name":"Marietta"},{"@type":"City","name":"Dallas"},{"@type":"City","name":"Douglasville"},{"@type":"City","name":"Jasper"},{"@type":"City","name":"Ellijay"},{"@type":"City","name":"Blue Ridge"},{"@type":"City","name":"Ringgold"},{"@type":"City","name":"Adairsville"},{"@type":"City","name":"Rockmart"},{"@type":"City","name":"Cave Spring"}],"address":{"@type":"PostalAddress","streetAddress":"246 N 5th Ave SW","addressLocality":"Rome","addressRegion":"GA","postalCode":"30165","addressCountry":"US"},"telephone":"+17629997265","image":"https://www.georgiaseocompany.com/assets/img/social-card.png","logo":"https://www.georgiaseocompany.com/assets/img/social-card.png","openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday"],"opens":"14:00","closes":"18:00"},{"@type":"OpeningHoursSpecification","dayOfWeek":["Thursday","Friday"],"opens":"07:00","closes":"18:00"}],"founder":{"@id":"https://www.georgiaseocompany.com/#eric-kirby"}},{"@type":"WebSite","@id":"https://www.georgiaseocompany.com/#website","url":"https://www.georgiaseocompany.com/","name":"Georgia SEO Company","publisher":{"@id":"https://www.georgiaseocompany.com/#business"}},{"@type":"Person","@id":"https://www.georgiaseocompany.com/#eric-kirby","name":"Eric Kirby","jobTitle":"Owner","description":"Runs Georgia SEO Company from Rome, Georgia after more than a decade in technology sales, service and support.","url":"https://www.georgiaseocompany.com/about/","worksFor":{"@id":"https://www.georgiaseocompany.com/#business"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Locations","item":"https://www.georgiaseocompany.com/locations/"},{"@type":"ListItem","position":2,"name":"Savannah","item":"https://www.georgiaseocompany.com/savannah-seo/"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Most of our customers are tourists. Does local SEO still apply?","acceptedAnswer":{"@type":"Answer","text":"Yes, and it looks a little different. Visitors search with the city name attached and they read reviews harder than residents do, so the profile and the review pace still carry the map result. What changes is the page set: questions asked before a trip, comparisons between options, and practical details like parking, timing and what's nearby."}},{"@type":"Question","name":"We sell to the port and to warehouses. Is that a different kind of SEO?","acceptedAnswer":{"@type":"Answer","text":"The mechanics are the same and the vocabulary is different. Buyers on that side search capability, equipment and certification language, so the profile category and the pages get built around what you can handle rather than around who you are. It's also a market where a clean, fast site and a phone that gets answered close more work than any clever tactic."}},{"@type":"Question","name":"When should a Savannah roofer or tree service start on storm season?","acceptedAnswer":{"@type":"Answer","text":"Months before the season, in the quiet part of the year. Category and service area corrections land fast, but review history and page depth take longer, and both are what decide who gets the calls during the window. A term like emergency tree removal Savannah is held by companies that were already settled on it last spring, so work started after the first storm arrives usually pays off the following season instead."}},{"@type":"Question","name":"How often would we actually talk if you're in Rome?","acceptedAnswer":{"@type":"Answer","text":"Monthly at minimum, on a call or a screen share, walking through the report together. Beyond that, as often as something needs a decision. The report lands on a date you know in advance, so the rhythm is predictable, and the person on the call is the person doing the work."}}]},{"@type":"Service","name":"SEO Company in Savannah, GA","provider":{"@id":"https://www.georgiaseocompany.com/#business"},"areaServed":{"@type":"City","name":"Savannah"}}]}</script>
 </head><body>
 <a class="skip" href="#main">Skip to content</a>
@@ -53,23 +53,13 @@
 </div>
 <script>
 (function () {
-  // PHONE CLICKS, counted. The number sits in the header and the sticky bar on all 257
-  // pages, and for a local service business the phone very likely converts better than the
-  // form. Until now every one of those calls was invisible in GA4, so a page that produced
-  // nothing but calls looked identical to a page that produced nothing at all.
-  //
-  // Delegated on document so it covers the header link, the sticky bar, and any tel: link
-  // inside page copy without each needing its own binding. Mark phone_call_click as a key
-  // event in GA4 alongside generate_lead.
-  document.addEventListener('click', function (e) {
-    var a = e.target.closest && e.target.closest('a[href^="tel:"]');
-    if (!a || typeof gtag !== 'function') return;
-    gtag('event', 'phone_call_click', {
-      page_path: location.pathname,
-      link_location: a.closest('.stickycta') ? 'sticky bar'
-        : a.closest('header') ? 'header' : 'page body'
-    });
-  });
+  // NO phone-click listener here. One already lives in the GA4 config block below, firing
+  // the phone_click event, an established key event in the property with history behind it.
+  // A second listener was added here on 2026-08-21 under the name phone_call_click and
+  // removed the same day: it would have fired on the same clicks, split one metric across
+  // two event names, and diluted the key event that already worked. The useful part of it,
+  // recording WHICH of the three tel: links was tapped, was merged into the existing call
+  // instead. Do not add a second listener; extend the one in the config block.
   var h = document.querySelector('header.hd');
   var b = h && h.querySelector('.navtoggle');
   var nav = h && h.querySelector('nav');
