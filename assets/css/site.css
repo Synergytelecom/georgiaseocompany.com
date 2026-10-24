@@ -992,6 +992,8 @@ section.closing .leadform .cta:active { box-shadow: 2px 2px 0 var(--ink); }
   }
   .sticky-tel { background: #fff; color: var(--ink); }
   .sticky-cta { background: var(--accent); color: var(--ink); }
+  /* A page without the audit button (p.noStickyCta) gives the phone button the whole bar. */
+  .stickycta a:only-child { grid-column: 1 / -1; }
   .stickycta a:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
   body { padding-bottom: 4.6rem; }
 }
