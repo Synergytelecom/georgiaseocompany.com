@@ -1441,3 +1441,182 @@ section.callcal { padding-top: 1.5rem; padding-bottom: 1.5rem; }
 .rev-source { margin: 0; font-size: .9rem; }
 .pb-result .rb-tiles { margin: .2rem 0 .7rem; }
 .pb-more { margin: .6rem 0 0; font-size: .9rem; }
+
+/* Plans and pricing (/pricing/, 2026-11-20): the web twin of the printed pricing flyer
+   (~/gsc-print/pricing-flyer-2026-11). Every rule is scoped to the hero tag or to one of the four
+   pricing-* section classes, so nothing here reaches another webpage. The plan cards need more than
+   the 42rem reading column, so these sections widen their measure to 62rem; on a phone the max()
+   keeps the usual 1.25rem gutter. */
+section.hero .pricing-tag {
+  display: inline-block;
+  margin: 0 0 .9rem;
+  padding: .45rem .85rem .3rem;
+  font-family: var(--font-display);
+  letter-spacing: .07em;
+  font-size: 1.05rem;
+  line-height: 1;
+  background: var(--accent);
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  box-shadow: 3px 3px 0 var(--ink);
+  transform: rotate(-2deg);
+}
+main > section.pricing-includes,
+main > section.pricing-plans,
+main > section.pricing-promise,
+main > section.pricing-starter {
+  padding-left: max(1.25rem, calc((100% - 62rem) / 2));
+  padding-right: max(1.25rem, calc((100% - 62rem) / 2));
+}
+.pricing-checks { list-style: none; margin: 0; padding: 0; display: grid; gap: .55rem 1.75rem; }
+.pricing-checks li { position: relative; padding-left: 1.9rem; line-height: 1.4; text-wrap: pretty; }
+/* The sitewide list rhythm (section:not(.related) li + li) would drop every item after the first
+   in these grid and chip rows; the grid gap does that job here. */
+main section .pricing-checks li + li,
+main section .st-prices li + li { margin-top: 0; }
+.pricing-checks li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: .05rem;
+  width: 1.35rem;
+  height: 1.35rem;
+  background: url('/assets/img/badge-arrow.svg') no-repeat center / contain;
+}
+
+/* Every SEO plan includes: the shared monthly work, once, beside the county-seat burst. */
+.pricing-includes h2 { color: var(--primary); text-shadow: 2px 2px 0 var(--ink); }
+.pricing-includes .inc-wrap { display: grid; gap: 1.5rem; align-items: center; }
+.pricing-seat { text-align: center; }
+.pricing-seat .burst { position: relative; width: 12.5rem; aspect-ratio: 150 / 96; margin: 0 auto; }
+.pricing-seat .burst svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.pricing-seat .burst span {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(-4deg);
+  font-family: var(--font-display);
+  letter-spacing: .04em;
+  font-size: 1.2rem;
+  line-height: 1;
+}
+.pricing-seat p { margin: .45rem auto 0; max-width: 15rem; font-family: var(--font-head); font-size: .9rem; line-height: 1.35; text-wrap: balance; }
+@media (min-width: 40rem) {
+  .pricing-includes .pricing-checks { grid-template-columns: 1fr 1fr; }
+}
+@media (min-width: 52rem) {
+  .pricing-includes .inc-wrap { grid-template-columns: 1fr 14rem; }
+}
+
+/* The three plans: comic panels, low to high, the top plan raised in yellow. Each price sits in its
+   own element because QA's price rule reads two dollar figures in one sentence as a range. */
+.pricing-plans h2 { text-align: center; }
+.pricing-grid { display: grid; gap: 2rem; margin-top: 1.5rem; }
+.pricing-plan {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 1.1rem 1.1rem 1.2rem;
+  background: #fff;
+  border: var(--frame);
+  box-shadow: var(--pop);
+}
+.pricing-plan h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: .04em;
+  font-size: 1.9rem;
+  line-height: 1;
+  color: var(--primary);
+  text-shadow: 2px 2px 0 var(--ink);
+}
+.pricing-plan p { margin: 0; }
+.pricing-plan .outcome { margin: .45rem 0 .8rem; font-family: var(--font-head); font-weight: 700; line-height: 1.3; text-wrap: pretty; }
+.pricing-plan .price { display: flex; align-items: baseline; gap: .45rem; padding-top: .65rem; border-top: 2px solid var(--ink); }
+.pricing-plan .amt { font-family: var(--font-display); font-size: 3.5rem; line-height: .9; letter-spacing: .02em; }
+.pricing-plan .per { font-family: var(--font-head); font-weight: 700; }
+.pricing-plan .setup { margin-top: .4rem; font-family: var(--font-head); font-weight: 700; }
+.pricing-plan .yearly { margin: .1rem 0 .85rem; font-size: .95rem; }
+.pricing-plan .yearly b { font-weight: 600; padding: 0 .15rem; background: linear-gradient(transparent 52%, var(--accent) 52%); }
+.pricing-plan .list-head { margin-bottom: .55rem; padding-top: .65rem; border-top: 2px dashed var(--rule); font-family: var(--font-head); font-weight: 700; }
+.pricing-plan .pricing-checks { gap: .5rem; font-size: .97rem; }
+.pricing-plan.best { padding-top: 1.6rem; background: var(--accent); border-width: 4px; box-shadow: 8px 8px 0 var(--ink); }
+.pricing-plan.best .yearly b { background: linear-gradient(transparent 52%, #fff 52%); }
+.pricing-plan.best .list-head { border-top-color: rgba(11, 11, 11, .35); }
+.pricing-plan .best-tab {
+  position: absolute;
+  top: -1.15rem;
+  left: 50%;
+  transform: translateX(-50%) rotate(-2deg);
+  white-space: nowrap;
+  padding: .45rem .95rem .3rem;
+  font-family: var(--font-display);
+  letter-spacing: .07em;
+  font-size: 1.1rem;
+  line-height: 1;
+  color: #fff;
+  background: var(--primary);
+  border: 3px solid var(--ink);
+  box-shadow: 3px 3px 0 var(--ink);
+  text-shadow: 1.5px 1.5px 0 var(--ink);
+}
+.pricing-pdf { margin: 2rem 0 0; text-align: center; }
+.pricing-pdf a {
+  display: inline-block;
+  padding: .6rem 1.35rem;
+  font-family: var(--font-display);
+  letter-spacing: .05em;
+  font-size: 1.1rem;
+  color: var(--ink);
+  text-decoration: none;
+  background: #fff;
+  border: var(--frame);
+  border-radius: 999px;
+  box-shadow: var(--pop-panel);
+}
+.pricing-pdf a:hover, .pricing-pdf a:focus { background: var(--accent); }
+@media (min-width: 56rem) {
+  .pricing-grid { grid-template-columns: repeat(3, 1fr); gap: 1.4rem; align-items: stretch; margin-top: 2rem; }
+  .pricing-plan .outcome { min-height: 2.6em; }
+  .pricing-plan.best { transform: translateY(-.5rem); }
+}
+
+/* Month to month, no contracts, you own everything: the closing band's ink and yellow. */
+main > section.pricing-promise {
+  color: #f3efe6;
+  background:
+    radial-gradient(circle, rgba(255, 209, 0, .12) 1.5px, transparent 1.5px) 0 0 / 16px 16px,
+    var(--ink);
+}
+.pricing-promise .promise-grid { display: grid; gap: 1.25rem; }
+.pricing-promise .p-item { display: flex; gap: .85rem; align-items: flex-start; }
+.pricing-promise svg { flex: none; width: 2.6rem; height: 2.6rem; }
+.pricing-promise h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: .05em;
+  font-size: 1.5rem;
+  line-height: 1.05;
+  color: var(--accent);
+  text-shadow: 2px 2px 0 rgba(228, 0, 43, .6);
+}
+.pricing-promise p { margin: .25rem 0 0; font-family: var(--font-head); line-height: 1.4; }
+@media (min-width: 48rem) {
+  .pricing-promise .promise-grid { grid-template-columns: .9fr .9fr 1.4fr; gap: 1.5rem; }
+}
+
+/* Starter Site: plain on purpose, so it never competes with the plans. */
+.pricing-starter .st-prices { list-style: none; margin: 0 0 1rem; padding: 0; display: flex; flex-wrap: wrap; gap: .55rem; }
+.pricing-starter .st-prices li {
+  padding: .3rem .85rem;
+  font-family: var(--font-head);
+  font-weight: 700;
+  background: var(--wash);
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+}
+.pricing-starter .addon { margin: 0; padding-top: .9rem; font-size: .92rem; border-top: 2px dashed var(--rule); }
